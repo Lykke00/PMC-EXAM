@@ -1,16 +1,96 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.gluonhq.charm.glisten.control.DropdownButton?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
-
 <?import javafx.scene.control.Button?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="dk.easv.pmc.gui.controller.HelloController">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-    </padding>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-    <Label fx:id="welcomeText"/>
-    <Button text="Hello!" onAction="#onHelloButtonClick"/>
+<VBox alignment="CENTER" prefHeight="551.0" prefWidth="659.0" spacing="20.0" style="-fx-background-color: #bff5ce;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23" fx:controller="dk.easv.pmc.gui.controller.HelloController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+   <children>
+      <HBox>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+         <children>
+            <Label text="Search:">
+               <HBox.margin>
+                  <Insets right="5.0" top="5.0" />
+               </HBox.margin>
+               <font>
+                  <Font name="Verdana Bold" size="12.0" />
+               </font>
+            </Label>
+            <TextField maxWidth="140.0" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" style="-fx-background-color: #ebfcf0;">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </TextField>
+            <DropdownButton>
+                <items>
+                    <MenuItem text="None" />
+                </items>
+               <HBox.margin>
+                  <Insets left="10.0" top="5.0" />
+               </HBox.margin>
+            </DropdownButton>
+            <Button mnemonicParsing="false" style="-fx-background-color: #66d184;" text="Clear">
+               <HBox.margin>
+                  <Insets left="15.0" />
+               </HBox.margin>
+               <font>
+                  <Font name="Verdana" size="12.0" />
+               </font>
+            </Button>
+         </children>
+      </HBox>
+      <TableView prefHeight="410.0" prefWidth="582.0" style="-fx-background-color: #ebfcf0;">
+        <columns>
+          <TableColumn prefWidth="145.60004234313965" style="-fx-background-color: #66d184;" text="Title" />
+          <TableColumn prefWidth="96.7999267578125" style="-fx-background-color: #66d184;" text="Genre" />
+            <TableColumn prefWidth="70.4000244140625" style="-fx-background-color: #66d184;" text="Duration" />
+            <TableColumn prefWidth="63.2000732421875" style="-fx-background-color: #66d184;" text="Rating" />
+            <TableColumn prefWidth="95.20001220703125" style="-fx-background-color: #66d184;" text="Official rating" />
+            <TableColumn prefWidth="59.200042724609375" style="-fx-background-color: #66d184;" text="Play" />
+            <TableColumn minWidth="0.0" prefWidth="84.00004882812505" style="-fx-background-color: #66d184;" text="Edit" />
+        </columns>
+         <VBox.margin>
+            <Insets top="10.0" />
+         </VBox.margin>
+      </TableView>
+      <HBox>
+         <children>
+            <Button mnemonicParsing="false" style="-fx-background-color: #66d184;" text="Remove">
+               <font>
+                  <Font name="Verdana" size="12.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" style="-fx-background-color: #66d184;" text="Add">
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+               <font>
+                  <Font name="Verdana" size="12.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" style="-fx-background-color: #66d184;" text="Manage category">
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+               <font>
+                  <Font name="Verdana" size="12.0" />
+               </font>
+            </Button>
+         </children>
+      </HBox>
+   </children>
 </VBox>
