@@ -14,16 +14,27 @@ public class MovieModel {
         return this.movieLogic.deleteMovie(movie);
     }
 
+    public Movie createMovie(Movie movie) throws Exception {
+        return this.movieLogic.createMovie(movie);
+    }
+
     public static void main(String[] args) throws Exception {
         MovieModel movieModel = new MovieModel();
 
+        Movie m = new Movie("hej", 2.5, 6, "ggtg");
+
+        Movie sm = movieModel.createMovie(m);
+
+        if (sm.getId() > 0)
+            System.out.println("lykke er sej");
+        /*
         Movie movie = new Movie(1);
 
         boolean n = movieModel.deleteMovie(movie);
 
         if (n) {
             System.out.println("success");
-        }
+        }*/
     }
 
 }

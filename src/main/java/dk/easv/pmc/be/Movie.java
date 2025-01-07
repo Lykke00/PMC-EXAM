@@ -10,55 +10,73 @@ public class Movie {
     private String fileLink;
     private Date lastView;
 
-    public Movie(int id) {
+    public Movie(int id, String name, double IMDBrating, double personalRating, String fileLink, Date lastView) {
         this.id = id;
+        this.name = name;
+        this.IMDBrating = IMDBrating;
+        this.personalRating = personalRating;
+        this.fileLink = fileLink;
+        this.lastView = lastView;
+    }
+
+    public Movie(String name, double IMDBrating, double personalRating, String fileLink) {
+        this.name = name;
+        this.IMDBrating = IMDBrating;
+        this.personalRating = personalRating;
+        this.fileLink = fileLink;
+        updateLastView();
+    }
+
+    public void updateLastView() {
+        java.util.Date now = new java.util.Date();
+        this.lastView = new Date(now.getTime());
     }
 
     public int getId() {
         return id;
     }
 
-    private void setId(int id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    private String getName() {
+    public String getName() {
         return name;
     }
 
-    private void setName(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
-    private double getIMDBrating() {
+    public double getIMDBrating() {
         return IMDBrating;
     }
 
-    private void setIMDBrating(double IMDBrating) {
+    public void setIMDBrating(double IMDBrating) {
         this.IMDBrating = IMDBrating;
     }
 
-    private double getPersonalRating() {
+    public double getPersonalRating() {
         return personalRating;
     }
 
-    private void setPersonalRating(double personalRating) {
+    public void setPersonalRating(double personalRating) {
         this.personalRating = personalRating;
     }
 
-    private String getFileLink() {
+    public String getFileLink() {
         return fileLink;
     }
 
-    private void setFileLink(String fileLink) {
+    public void setFileLink(String fileLink) {
         this.fileLink = fileLink;
     }
 
-    private Date getLastView() {
+    public Date getLastView() {
         return lastView;
     }
 
-    private void setLastView(Date lastView) {
+    public void setLastView(Date lastView) {
         this.lastView = lastView;
     }
 }

@@ -14,4 +14,8 @@ public class MovieLogic {
     public boolean deleteMovie(Movie movie) throws Exception {
         return this.movieDAO.deleteMovie(movie);
     }
+
+    public Movie createMovie(Movie movie) throws Exception {
+        return this.movieDAO.createMovie(movie);
+    }
 }
