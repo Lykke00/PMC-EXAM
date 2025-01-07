@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.gluonhq.charm.glisten.control.DropdownButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="551.0" prefWidth="659.0" spacing="20.0" style="-fx-background-color: #bff5ce;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23" fx:controller="dk.easv.pmc.gui.controller.HelloController">
+<VBox alignment="CENTER" prefHeight="551.0" prefWidth="659.0" spacing="20.0" style="-fx-background-color: #bff5ce;" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.pmc.gui.controller.HelloController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -35,17 +35,17 @@
                   <Insets />
                </HBox.margin>
             </TextField>
-            <DropdownButton>
-                <items>
-                    <MenuItem text="None" />
-                </items>
+            <MenuButton mnemonicParsing="false" style="-fx-background-color: #66d184;" text="MenuButton">
+              <items>
+                <MenuItem mnemonicParsing="false" text="None" />
+              </items>
                <HBox.margin>
-                  <Insets left="10.0" top="5.0" />
+                  <Insets left="10.0" />
                </HBox.margin>
-            </DropdownButton>
+            </MenuButton>
             <Button mnemonicParsing="false" style="-fx-background-color: #66d184;" text="Clear">
                <HBox.margin>
-                  <Insets left="15.0" />
+                  <Insets left="10.0" />
                </HBox.margin>
                <font>
                   <Font name="Verdana" size="12.0" />
