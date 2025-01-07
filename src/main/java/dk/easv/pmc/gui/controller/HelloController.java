@@ -1,4 +1,4 @@
-package dk.easv.pmc;
+package dk.easv.pmc.gui.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

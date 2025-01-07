@@ -1,4 +1,4 @@
-package dk.easv.pmc;
+package dk.easv.pmc.gui;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
