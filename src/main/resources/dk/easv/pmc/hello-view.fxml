@@ -37,8 +37,7 @@
             </TextField>
             <MenuButton mnemonicParsing="false" style="-fx-background-color: #66d184;" text="MenuButton">
               <items>
-                <MenuItem mnemonicParsing="false" text="Action 1" />
-                <MenuItem mnemonicParsing="false" text="Action 2" />
+                <MenuItem mnemonicParsing="false" text="None" />
               </items>
                <HBox.margin>
                   <Insets left="10.0" />
