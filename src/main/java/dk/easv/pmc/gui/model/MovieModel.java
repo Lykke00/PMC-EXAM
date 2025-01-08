@@ -35,6 +35,6 @@ public class MovieModel {
         if (n) {
             System.out.println("success");
         }*/
-    }
+}
 
 }
