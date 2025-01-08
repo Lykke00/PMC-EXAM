@@ -56,6 +56,27 @@ public class CategoryManagerController {
             showAlert("Error", "Could not add category: " + e.getMessage());
         }
     }
+    @FXML
+    private void onDeleteCategory() {
+        Category selectedCategory = categoryListView.getSelectionModel().getSelectedItem();
+
+        if (selectedCategory == null) {
+            showAlert("Error", "Please select a category to delete.");
+            return;
+        }
+
+        try {
+            boolean isDeleted = categoryLogic.deleteCategory(selectedCategory);
+            if (isDeleted) {
+                categoryList.remove(selectedCategory);
+                categoryListView.setItems(categoryList);
+            } else {
+                showAlert("Error", "Could not delete the selected category: " + selectedCategory.getName());
+            }
+        } catch (Exception e) {
+            showAlert("Error", "Could not delete category: " + e.getMessage());
+        }
+    }
 
     private void loadCategories() {
         try {

@@ -12,6 +12,6 @@
       <ListView fx:id="categoryListView" layoutX="232.0" layoutY="35.0" prefHeight="328.0" prefWidth="250.0" />
       <Label layoutX="14.0" layoutY="35.0" text="Category:" />
       <Button layoutX="185.0" layoutY="97.0" mnemonicParsing="false" onAction="#onAddCategory" text="Save" />
-      <Button layoutX="76.0" layoutY="97.0" mnemonicParsing="false" text="Delete" />
+      <Button fx:id="DeleteCategory" layoutX="76.0" layoutY="97.0" mnemonicParsing="false" onAction="#onDeleteCategory" text="Delete" />
    </children>
 </AnchorPane>
