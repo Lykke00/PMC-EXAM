@@ -7,6 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 
@@ -22,13 +23,16 @@ public class CategoryManagerController {
     private ListView<Category> categoryListView;
 
     @FXML
+    private Button ManageCategory;
+
+    @FXML
     public void initialize() {
         try {
             categoryLogic = new CategoryLogic();
+            loadCategories();
         } catch (Exception e) {
             showAlert("Error", "Could not initialize MovieLogic: " + e.getMessage());
         }
-        loadCategories();
     }
 
     @FXML
@@ -50,27 +54,6 @@ public class CategoryManagerController {
             categoryNameField.clear();
         } catch (Exception e) {
             showAlert("Error", "Could not add category: " + e.getMessage());
-        }
-    }
-
-    @FXML
-    private void onDeleteCategoryClick() {
-        Category selectedCategory = categoryListView.getSelectionModel().getSelectedItem();
-
-        if (selectedCategory == null) {
-            showAlert("Error", "Please select a category to delete.");
-            return;
-        }
-
-        try {
-            boolean isDeleted = categoryLogic.deleteCategory(selectedCategory);
-
-            if (isDeleted) {
-                categoryList.remove(selectedCategory);
-                categoryListView.setItems(categoryList);
-            }
-        } catch (Exception e) {
-            showAlert("Error", "Could not delete category: " + e.getMessage());
         }
     }
 
