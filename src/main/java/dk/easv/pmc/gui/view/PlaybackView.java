@@ -87,7 +87,7 @@ public class PlaybackView {
             hideButtonTransition.play();
         });
 
-        // Show the button when hovering over the video
+
         mediaView.setOnMouseEntered(event -> playButton.setOpacity(1));
         mediaView.setOnMouseExited(event -> {
             if (playButton.getOpacity() == 1) {
@@ -103,7 +103,7 @@ public class PlaybackView {
     public MediaView createMediaView(MediaPlayer mediaPlayer) {
         MediaView mediaView = new MediaView(mediaPlayer);
 
-        // Error handling
+
         mediaPlayer.setOnError(() -> {
             System.out.println("Media error: " + mediaPlayer.getError().getMessage());
         });
