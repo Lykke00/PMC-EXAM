@@ -9,21 +9,25 @@ public class Movie {
     private double personalRating;
     private String fileLink;
     private Date lastView;
+    private int duration;
 
-    public Movie(int id, String name, double IMDBrating, double personalRating, String fileLink, Date lastView) {
+    public Movie(int id, String name, double IMDBrating, double personalRating, String fileLink, Date lastView, int duration) {
         this.id = id;
         this.name = name;
         this.IMDBrating = IMDBrating;
         this.personalRating = personalRating;
         this.fileLink = fileLink;
         this.lastView = lastView;
+        this.duration = duration;
     }
 
-    public Movie(String name, double IMDBrating, double personalRating, String fileLink) {
+    public Movie(String name, double IMDBrating, double personalRating, String fileLink, int duration ) {
         this.name = name;
         this.IMDBrating = IMDBrating;
         this.personalRating = personalRating;
         this.fileLink = fileLink;
+        this.duration = duration;
+
         updateLastView();
     }
 
@@ -78,5 +82,9 @@ public class Movie {
 
     public void setLastView(Date lastView) {
         this.lastView = lastView;
+    }
+
+    public int getDuration() {
+        return duration;
     }
 }

@@ -21,20 +21,20 @@ public class MovieModel {
     public static void main(String[] args) throws Exception {
         MovieModel movieModel = new MovieModel();
 
-        Movie m = new Movie("hej", 2.5, 6, "ggtg");
+        Movie m = new Movie("hej", 2.5, 6, "ggtg", 234);
 
         Movie sm = movieModel.createMovie(m);
 
         if (sm.getId() > 0)
             System.out.println("lykke er sej");
-        /*
-        Movie movie = new Movie(1);
 
-        boolean n = movieModel.deleteMovie(movie);
+        //ovie movie = new Movie(1);
 
-        if (n) {
-            System.out.println("success");
-        }*/
+        //boolean n = movieModel.deleteMovie(movie);
+
+        //if (n) {
+        //    System.out.println("success");
+        //}
 }
 
 }
