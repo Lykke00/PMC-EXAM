@@ -1,6 +1,7 @@
 package dk.easv.pmc.be;
 
 import java.sql.Date;
+import java.util.List;
 
 public class Movie {
     private int id;
@@ -10,8 +11,9 @@ public class Movie {
     private String fileLink;
     private Date lastView;
     private int duration;
+    private List<Category> categories;
 
-    public Movie(int id, String name, double IMDBrating, double personalRating, String fileLink, Date lastView, int duration) {
+    public Movie(int id, String name, double IMDBrating, double personalRating, String fileLink, Date lastView, int duration, List<Category> categories) {
         this.id = id;
         this.name = name;
         this.IMDBrating = IMDBrating;
@@ -19,14 +21,16 @@ public class Movie {
         this.fileLink = fileLink;
         this.lastView = lastView;
         this.duration = duration;
+        this.categories = categories;
     }
 
-    public Movie(String name, double IMDBrating, double personalRating, String fileLink, int duration ) {
+    public Movie(String name, double IMDBrating, double personalRating, String fileLink, int duration, List<Category> categories) {
         this.name = name;
         this.IMDBrating = IMDBrating;
         this.personalRating = personalRating;
         this.fileLink = fileLink;
         this.duration = duration;
+        this.categories = categories;
 
         updateLastView();
     }
@@ -86,5 +90,13 @@ public class Movie {
 
     public int getDuration() {
         return duration;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
+    }
+
+    public List<Category> getCategories() {
+        return categories;
     }
 }

@@ -69,4 +69,10 @@ public class CategoryDAO implements ICategoryDAO {
 
         return categories;
     }
+
+
+    // TODO : Implementér den
+    public boolean addCategoryToMovie(int movieID, int categoryID) throws Exception {
+        return false;
+    }
 }
