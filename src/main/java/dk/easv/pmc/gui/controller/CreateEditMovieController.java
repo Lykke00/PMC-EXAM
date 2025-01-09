@@ -66,7 +66,7 @@ public class CreateEditMovieController{
             return;
         }
 
-        Movie movie = new Movie(title, ratingOff, ratingPers, path);
+        Movie movie = new Movie(title, ratingOff, ratingPers, path, 0);
         try{
             mm.createMovie(movie);
         }

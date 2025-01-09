@@ -37,8 +37,8 @@ public class MovieDAO implements IMovieDAO {
     @Override
     public Movie createMovie(Movie movie) throws Exception {
         String query = """
-                INSERT INTO Movie (Name, IMDBRating, PersonalRating, FileLink, LastView)
-                       VALUES(?, ?, ?, ?, ?);
+                INSERT INTO Movie (Name, IMDBRating, PersonalRating, FileLink, LastView, Duration)
+                       VALUES(?, ?, ?, ?, ?, ?);
                 """;
 
         try (Connection conn = dbConnector.getConnection();
@@ -49,6 +49,8 @@ public class MovieDAO implements IMovieDAO {
             stmt.setDouble(3, movie.getPersonalRating());
             stmt.setString(4, movie.getFileLink());
             stmt.setDate(5, movie.getLastView());
+            stmt.setInt(6, movie.getDuration());
+
 
             int rowsAffected = stmt.executeUpdate();
 
