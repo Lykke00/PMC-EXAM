@@ -89,7 +89,7 @@
                   <Font name="Verdana" size="12.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" style="-fx-background-color: #66d184;" text="Manage category">
+            <Button fx:id="ManageCategory" mnemonicParsing="false" onAction="#onManageCategoryClick" style="-fx-background-color: #66d184;" text="Manage category">
                <HBox.margin>
                   <Insets left="10.0" />
                </HBox.margin>
