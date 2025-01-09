@@ -1,8 +1,7 @@
 package dk.easv.pmc.gui.controller;
 
 import dk.easv.pmc.be.Category;
-import dk.easv.pmc.bll.MovieLogic;
-import dk.easv.pmc.gui.model.CategoryLogic;
+import dk.easv.pmc.bll.CategoryLogic;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
