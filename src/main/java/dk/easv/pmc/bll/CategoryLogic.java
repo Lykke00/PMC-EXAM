@@ -1,4 +1,4 @@
-package dk.easv.pmc.gui.model;
+package dk.easv.pmc.bll;
 
 
 import dk.easv.pmc.be.Category;
