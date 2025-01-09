@@ -1,25 +1,30 @@
 package dk.easv.pmc.gui.controller;
 
+import dk.easv.pmc.be.Category;
 import dk.easv.pmc.be.Movie;
 import dk.easv.pmc.be.ShowAlerts;
+import dk.easv.pmc.gui.model.CategoryModel;
 import dk.easv.pmc.gui.model.MovieModel;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
-
+import javafx.stage.Stage;
 import java.io.File;
-import java.net.URL;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class CreateEditMovieController{
     private MovieModel mm;
+    private CategoryModel cm;
+    private Stage stage;
+    private List<Category> chosenCategories = new ArrayList<>();
+    private Map<String, Category> catMap = new HashMap<>();
 
 
     @FXML
-    private ComboBox btnCategory;
+    private ComboBox<String> btnCategory;
     @FXML
     private TextField txtTitle;
     @FXML
@@ -33,8 +38,35 @@ public class CreateEditMovieController{
     @FXML
     private TextField txtFilePath;
 
-    public void setMovieModel(MovieModel movieModel){
+    public void setModels(MovieModel movieModel, CategoryModel catModel){
         this.mm = movieModel;
+        this.cm = catModel;
+
+        init();
+    }
+    public void setStage(Stage window){
+        this.stage = window;
+    }
+
+    private void init(){
+        try {
+            List<Category> cats = cm.getAllCategories();
+            for (Category cat : cats){
+                catMap.put(cat.getName(), cat);
+                btnCategory.getItems().add(cat.getName());
+            }
+            btnCategory.addEventHandler(ActionEvent.ACTION, event -> {
+                try {
+                    ComboBox cb = (ComboBox) event.getSource();
+                    changeCategory((String) cb.getValue());
+                } catch (Exception e) {
+                    System.out.println("Bro du lugter");
+                }
+            });
+        } catch (Exception e) {
+            ShowAlerts.displayError("Kunne ikke hente genrerne!");
+            stage.close();
+        }
     }
 
     @FXML
@@ -44,8 +76,9 @@ public class CreateEditMovieController{
             ShowAlerts.displayError("Title is empty");
             return;
         }
-        String genre = "None"; // TODO : FÅ FAT I GENRERNE
+
         // txtDuration - er disabled
+        int duration = 0; // TODO : get duration
         double ratingPers = 0;
         double ratingOff = 0;
         try{
@@ -66,9 +99,10 @@ public class CreateEditMovieController{
             return;
         }
 
-        Movie movie = new Movie(title, ratingOff, ratingPers, path, 0);
+        Movie movie = new Movie(title, ratingOff, ratingPers, path, duration, chosenCategories);
         try{
             mm.createMovie(movie);
+            stage.close();
         }
         catch (Exception e) {
             ShowAlerts.displayError("Kunne ikke tilføje filmen. " + e.getMessage());
@@ -91,8 +125,28 @@ public class CreateEditMovieController{
         }
     }
 
+    private void changeCategory(String catName) {
+        if (chosenCategories.contains(catMap.get(catName))) {
+            chosenCategories.remove(catMap.get(catName));
+        }
+        else{
+            System.out.println(catName);
+            chosenCategories.add(catMap.get(catName));
+        }
+
+        StringBuilder displayText = new StringBuilder();
+        for (Category cat : chosenCategories){
+            displayText.append(cat.getName()).append(", ");
+        }
+        displayText.setLength(displayText.length() - 2);
+
+        txtGenre.setText(displayText.toString());
+        System.out.println(catName);
+    }
+
 
    public static void main(String[] args){
         System.out.println(Double.parseDouble(""));
     }
+
 }

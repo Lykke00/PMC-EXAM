@@ -21,7 +21,7 @@ public class MovieModel {
     public static void main(String[] args) throws Exception {
         MovieModel movieModel = new MovieModel();
 
-        Movie m = new Movie("hej", 2.5, 6, "ggtg", 234);
+        Movie m = new Movie("hej", 2.5, 6, "ggtg", 234, null);
 
         Movie sm = movieModel.createMovie(m);
 
