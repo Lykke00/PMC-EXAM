@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.CheckComboBox?>
 
-<VBox alignment="CENTER" prefHeight="551.0" prefWidth="659.0" spacing="20.0" style="-fx-background-color: #bff5ce;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.pmc.gui.controller.HelloController">
+<VBox alignment="CENTER" prefHeight="551.0" prefWidth="659.0" spacing="20.0" style="-fx-background-color: #bff5ce;" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="dk.easv.pmc.gui.controller.HelloController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -50,7 +50,7 @@
                   <Insets left="10.0" right="10.0" />
                </HBox.margin>
             </MenuButton>
-            <Button mnemonicParsing="false" onAction="#playMovie" style="-fx-background-color: #66d184;" text="Clear">
+            <Button mnemonicParsing="false" style="-fx-background-color: #66d184;" text="Clear">
                <HBox.margin>
                   <Insets left="10.0" />
                </HBox.margin>
@@ -60,7 +60,7 @@
             </Button>
          </children>
       </HBox>
-      <TableView prefHeight="410.0" prefWidth="582.0" style="-fx-background-color: #ebfcf0;">
+      <TableView fx:id="movieListView" prefHeight="410.0" prefWidth="582.0" style="-fx-background-color: #ebfcf0;">
         <columns>
           <TableColumn prefWidth="145.60004234313965" style="-fx-background-color: #66d184;" text="Title" />
           <TableColumn prefWidth="96.7999267578125" style="-fx-background-color: #66d184;" text="Genre" />
@@ -81,7 +81,7 @@
                   <Font name="Verdana" size="12.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" style="-fx-background-color: #66d184;" text="Add">
+            <Button mnemonicParsing="false" style="-fx-background-color: #66d184;" text="Add" onAction="#onAddClick">
                <HBox.margin>
                   <Insets left="10.0" />
                </HBox.margin>
@@ -89,7 +89,7 @@
                   <Font name="Verdana" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="ManageCategory" mnemonicParsing="false" onAction="#onManageCategoryClick" style="-fx-background-color: #66d184;" text="Manage category">
+            <Button mnemonicParsing="false" style="-fx-background-color: #66d184;" text="Manage category">
                <HBox.margin>
                   <Insets left="10.0" />
                </HBox.margin>

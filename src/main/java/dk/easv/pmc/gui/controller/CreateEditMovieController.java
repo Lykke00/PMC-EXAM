@@ -90,7 +90,7 @@ public class CreateEditMovieController{
         try {
             ratingPers = Double.parseDouble(txtRating.getText());
         } catch (Exception e) {
-            //e.printStackTrace();
+            //e.printStackTrace(); // TODO : display errors - also up there ^^^^^^
         }
 
         String path = txtFilePath.getText().trim();
@@ -101,6 +101,7 @@ public class CreateEditMovieController{
 
         Movie movie = new Movie(title, ratingOff, ratingPers, path, duration, chosenCategories);
         try{
+            System.out.println(chosenCategories);
             mm.createMovie(movie);
             stage.close();
         }

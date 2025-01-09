@@ -5,4 +5,5 @@ import dk.easv.pmc.be.Movie;
 public interface IMovieDAO {
     boolean deleteMovie(Movie movie) throws Exception;
     Movie createMovie(Movie movie) throws Exception;
+    boolean setMovieCategories(Movie m) throws Exception;
 }

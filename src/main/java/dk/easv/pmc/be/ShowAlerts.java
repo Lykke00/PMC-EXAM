@@ -6,8 +6,8 @@ import javafx.scene.control.ButtonType;
 public class ShowAlerts {
     public static void displayError(String errorMessage){
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(errorMessage);
-        alert.setHeaderText("An error occurred");
+        alert.setHeaderText(errorMessage);
+        alert.setTitle("An error occurred");
         alert.showAndWait();
     }
     public static boolean displayWarning(String warningMessage){

@@ -15,7 +15,7 @@
       <TextField fx:id="txtDuration" disable="true" layoutX="123.0" layoutY="138.0" />
       <TextField fx:id="txtRating" layoutX="123.0" layoutY="187.0" />
       <TextField fx:id="txtRatingOff" layoutX="123.0" layoutY="233.0" />
-      <TextField fx:id="txtFilePath" disable="true" layoutX="123.0" layoutY="281.0" />
+      <TextField fx:id="txtFilePath" layoutX="123.0" layoutY="281.0" />
       <Label layoutX="73.0" layoutY="98.0" text="Genre" />
       <Label layoutX="66.0" layoutY="142.0" text="Duration" />
       <Label layoutX="72.0" layoutY="191.0" text="Rating" />

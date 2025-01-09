@@ -1,6 +1,9 @@
 package dk.easv.pmc.gui.controller;
 
+import dk.easv.pmc.be.ShowAlerts;
 import dk.easv.pmc.gui.HelloApplication;
+import dk.easv.pmc.gui.model.CategoryModel;
+import dk.easv.pmc.gui.model.MovieModel;
 import dk.easv.pmc.gui.view.PlaybackView;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -60,6 +63,7 @@ public class HelloController {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.showAndWait();
     } catch (IOException e) {
+        /*
         e.printStackTrace();
 
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -67,6 +71,33 @@ public class HelloController {
         alert.setHeaderText(null);
         alert.setContentText(e.getMessage());
         alert.showAndWait();
+
+         */
+        ShowAlerts.displayError("Kunne ikke åbne vinduet");
     }
+    }
+
+
+    @FXML
+    private void onAddClick(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(HelloApplication.class.getResource("/dk/easv/pmc/Add-EditMovie.fxml"));
+
+            Stage stage = new Stage();
+            Parent scene = loader.load();
+            stage.setScene(new Scene(scene));
+
+            CreateEditMovieController controller = loader.getController();
+            controller.setStage(stage);
+            controller.setModels(new MovieModel(), new CategoryModel());
+            stage.setTitle("Things");
+            //stage.setTitle("Add/Edit Movie"); // TODO : få fat i selected items
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.show();
+        } catch (Exception e) {
+            ShowAlerts.displayError("Kan ikke åbne vinduet!");
+        }
+
     }
 }

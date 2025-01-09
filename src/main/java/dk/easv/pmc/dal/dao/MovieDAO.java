@@ -1,12 +1,15 @@
 package dk.easv.pmc.dal.dao;
 
+import dk.easv.pmc.be.Category;
 import dk.easv.pmc.be.Movie;
+import dk.easv.pmc.be.ShowAlerts;
 import dk.easv.pmc.dal.DBConnector;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.List;
 
 public class MovieDAO implements IMovieDAO {
     private final DBConnector dbConnector;
@@ -60,9 +63,41 @@ public class MovieDAO implements IMovieDAO {
                 }
             }
 
+            setMovieCategories(movie);
             return movie;
         } catch (Exception e) {
             throw new Exception("Kunne ikke tilføje din film i databasen");
+        }
+    }
+
+
+
+
+    public boolean setMovieCategories(Movie m) throws Exception {
+        if (m == null || m.getCategories() == null) {
+            return false;
+        }
+        List<Category> categories = m.getCategories();
+        String SQL_del = "DELETE FROM CatMovie WHERE MovieId = ?;";
+        String SQL_add = "INSERT INTO CatMovie (CategoryId, MovieId) VALUES (?, ?);";
+
+        try(Connection conn = dbConnector.getConnection();
+            PreparedStatement delStmt = conn.prepareStatement(SQL_del);
+            PreparedStatement addStmt = conn.prepareStatement(SQL_add)) {
+
+            delStmt.setInt(1, m.getId());
+            delStmt.executeUpdate();
+
+            for (Category cat : categories) {
+                addStmt.setInt(1, cat.getId());
+                addStmt.setInt(2, m.getId());
+                addStmt.executeUpdate();
+            }
+            return true;
+        }
+        catch (Exception e) {
+            ShowAlerts.displayError(e.getMessage());
+            throw new Exception("Kunne ikke tilføje kategorierne");
         }
     }
 }
