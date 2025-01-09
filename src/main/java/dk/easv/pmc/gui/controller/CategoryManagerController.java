@@ -1,6 +1,7 @@
 package dk.easv.pmc.gui.controller;
 
 import dk.easv.pmc.be.Category;
+import dk.easv.pmc.be.ShowAlerts;
 import dk.easv.pmc.bll.CategoryLogic;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -58,6 +59,12 @@ public class CategoryManagerController {
     @FXML
     private void onDeleteCategory() {
         Category selectedCategory = categoryListView.getSelectionModel().getSelectedItem();
+
+        if (selectedCategory != null) {
+            if(!ShowAlerts.displayWarning("Are you sure you want to delete this category?"))
+                return;
+
+        }
 
         if (selectedCategory == null) {
             showAlert("Error", "Please select a category to delete.");

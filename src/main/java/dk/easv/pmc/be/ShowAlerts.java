@@ -1,6 +1,7 @@
 package dk.easv.pmc.be;
 
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 
 public class ShowAlerts {
     public static void displayError(String errorMessage){
@@ -8,5 +9,15 @@ public class ShowAlerts {
         alert.setTitle(errorMessage);
         alert.setHeaderText("An error occurred");
         alert.showAndWait();
+    }
+    public static boolean displayWarning(String warningMessage){
+        Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmation.setTitle("Confirm Deletion");
+        confirmation.setContentText(warningMessage);
+        var result = confirmation.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK){
+            return true;
+        }
+        return false;
     }
 }
