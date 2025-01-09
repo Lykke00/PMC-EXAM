@@ -1,5 +1,6 @@
 package dk.easv.pmc.gui.controller;
 
+import dk.easv.pmc.be.Category;
 import dk.easv.pmc.be.Movie;
 import dk.easv.pmc.be.ShowAlerts;
 import dk.easv.pmc.gui.model.MovieModel;
@@ -12,14 +13,16 @@ import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class CreateEditMovieController{
     private MovieModel mm;
+    private CategoryModel cm;
 
 
     @FXML
-    private ComboBox btnCategory;
+    private ComboBox<String> btnCategory;
     @FXML
     private TextField txtTitle;
     @FXML
@@ -33,8 +36,18 @@ public class CreateEditMovieController{
     @FXML
     private TextField txtFilePath;
 
-    public void setMovieModel(MovieModel movieModel){
+    public void setModels(MovieModel movieModel, CategoryModel catModel){
         this.mm = movieModel;
+        this.cm = catModel;
+
+        init();
+    }
+
+    private void init(){
+        List<Category> cats = cm.getAllCategories();
+        for (Category cat : cats){
+            btnCategory.getItems().add(cat.getName());
+        }
     }
 
     @FXML
