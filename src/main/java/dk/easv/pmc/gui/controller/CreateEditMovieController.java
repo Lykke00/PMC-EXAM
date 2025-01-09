@@ -60,7 +60,8 @@ public class CreateEditMovieController{
                     ComboBox cb = (ComboBox) event.getSource();
                     changeCategory((String) cb.getValue());
                 } catch (Exception e) {
-                    System.out.println("Bro du lugter");
+                    System.out.println("nej");
+                    ShowAlerts.displayError("Kunne ikke få kategorien");
                 }
             });
         } catch (Exception e) {
