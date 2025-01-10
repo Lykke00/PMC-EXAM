@@ -5,6 +5,9 @@ import dk.easv.pmc.be.Movie;
 import dk.easv.pmc.be.ShowAlerts;
 import dk.easv.pmc.dal.DBConnector;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +21,15 @@ public class MovieDAO implements IMovieDAO {
         } catch (Exception e) {
             throw new Exception("Der skete en fejl ved forbindelse til databasen");
         }
+    }
+
+    public boolean doesMovieExist(String filePath) {
+        String projectFolder = System.getProperty("user.dir");
+        filePath = filePath.replace("\\", "/");
+
+        Path path = Paths.get(projectFolder + "/" + filePath);
+
+        return Files.exists(path);
     }
 
     @Override
@@ -38,12 +50,13 @@ public class MovieDAO implements IMovieDAO {
                 String FileLink = rs.getString("FileLink");
                 Date LastView = rs.getDate("LastView");
 
-                ArrayList<Category> categories = getCategoriesForMovie(id);
+                if (!doesMovieExist(FileLink))
+                    continue;
 
+                ArrayList<Category> categories = getCategoriesForMovie(id);
                 Movie movie = new Movie(id, name, IMDBRating, PersonalRating, FileLink, LastView, 0, categories);
 
                 movies.add(movie);
-                //playlists.add(new (id, name));
             }
 
             return movies;
