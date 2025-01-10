@@ -99,4 +99,18 @@ public class Movie {
     public List<Category> getCategories() {
         return categories;
     }
+
+    public String getGenresString() {
+        String genres = "";
+        int length = categories.size();
+
+        for (int i = 0; i < length; i++) {
+            Category category = categories.get(i);
+            if (length == i + 1)
+               genres = genres + category.getName();
+            else
+                genres = genres + category.getName() + ", ";
+        }
+        return genres;
+    }
 }
