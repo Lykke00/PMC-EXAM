@@ -1,5 +1,12 @@
 package dk.easv.pmc.be;
 
+import dk.easv.pmc.bll.MetadataExtractor;
+import javafx.application.Platform;
+import org.apache.tika.Tika;
+import org.apache.tika.metadata.Metadata;
+
+import java.io.File;
+import java.io.IOException;
 import java.sql.Date;
 import java.util.List;
 
@@ -9,8 +16,10 @@ public class Movie {
     private double IMDBrating;
     private double personalRating;
     private String fileLink;
+    private String completeFileLink;
     private Date lastView;
     private int duration;
+    private String durationString;
     private List<Category> categories;
 
     public Movie(int id, String name, double IMDBrating, double personalRating, String fileLink, Date lastView, int duration, List<Category> categories) {
@@ -22,6 +31,9 @@ public class Movie {
         this.lastView = lastView;
         this.duration = duration;
         this.categories = categories;
+
+        this.durationString = MetadataExtractor.getDuration(fileLink);
+        setCompleteFileLink(fileLink);
     }
 
     public Movie(String name, double IMDBrating, double personalRating, String fileLink, int duration, List<Category> categories) {
@@ -32,12 +44,25 @@ public class Movie {
         this.duration = duration;
         this.categories = categories;
 
+        this.durationString = MetadataExtractor.getDuration(fileLink);
+
         updateLastView();
+        setCompleteFileLink(fileLink);
+    }
+
+    private void setCompleteFileLink(String fileLink) {
+        String projectFolder = System.getProperty("user.dir");
+        fileLink = fileLink.replace("\\", "/");
+        this.completeFileLink = projectFolder + "/" + fileLink;
     }
 
     public void updateLastView() {
         java.util.Date now = new java.util.Date();
         this.lastView = new Date(now.getTime());
+    }
+
+    public String getCompleteFileLink() {
+        return this.completeFileLink;
     }
 
     public int getId() {
@@ -107,10 +132,14 @@ public class Movie {
         for (int i = 0; i < length; i++) {
             Category category = categories.get(i);
             if (length == i + 1)
-               genres = genres + category.getName();
+                genres = genres + category.getName();
             else
                 genres = genres + category.getName() + ", ";
         }
         return genres;
+    }
+
+    public String getDurationString() {
+        return this.durationString;
     }
 }
