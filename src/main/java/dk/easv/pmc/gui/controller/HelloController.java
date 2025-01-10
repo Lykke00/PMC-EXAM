@@ -23,6 +23,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 import java.io.File;
 import java.io.IOException;
@@ -71,6 +72,35 @@ public class HelloController implements Initializable {
         tblColRating.setCellValueFactory(new PropertyValueFactory<>("PersonalRating"));
         tblColOfficialRating.setCellValueFactory(new PropertyValueFactory<>("IMDBrating"));
 
+        tblColPlay.setCellFactory(new Callback<TableColumn<Movie, String>, TableCell<Movie, String>>() {
+            @Override
+            public TableCell<Movie, String> call(TableColumn<Movie, String> param) {
+                return new TableCell<Movie, String>() {
+                    @Override
+                    protected void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            Button playButton = new Button("Play");
+                            playButton.setOnAction(event -> {
+                                Movie movie = getTableView().getItems().get(getIndex());
+                                try {
+                                    playbackView.play(movie.getCompleteFileLink());
+                                } catch (Exception e) {
+
+                                    ShowAlerts.displayError("Kunne ikke afspille film");
+                                }
+                            });
+                            setGraphic(playButton);
+                        }
+                    }
+                };
+            }
+        });
+
+
         try {
             movieListView.setItems(movieModel.getAllMovies());
         } catch (Exception e) {
@@ -85,16 +115,6 @@ public class HelloController implements Initializable {
     protected void onHelloButtonClick() {
         welcomeText.setText("Welcome to JavaFX Application!");
 
-    }
-
-    @FXML
-    private void playMovie(ActionEvent actionEvent) {
-        try {
-            playbackView.play("movies/sample.mp4");
-        } catch (Exception e) {
-            //TODO: håndter i alert
-            System.out.println(e.getMessage());
-        }
     }
 
     @FXML

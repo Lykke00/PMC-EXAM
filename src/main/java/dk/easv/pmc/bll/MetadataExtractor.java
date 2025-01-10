@@ -9,18 +9,21 @@ import java.io.IOException;
 public class MetadataExtractor {
     public static String getDuration(String filePath) {
         String projectDir = System.getProperty("user.dir");
-
-
-        System.out.println(projectDir);
-        File file = new File(projectDir + "/" + filePath);
-        if (file == null)
-            return null;
+        filePath = filePath.replace("\\", "/");
 
         Tika tika = new Tika();
         Metadata metadata = new Metadata();
 
+        File file = new File(projectDir + "/" + filePath);
+
         try {
             tika.parse(file, metadata);
+
+            for (String name : metadata.names()) {
+                System.out.println(name + ": " + metadata.get(name));
+            }
+
+
             String duration = metadata.get("xmpDM:duration");
             return duration != null ? duration : "Ukendt varighed";
         } catch (IOException e) {

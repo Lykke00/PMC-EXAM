@@ -16,6 +16,7 @@ public class Movie {
     private double IMDBrating;
     private double personalRating;
     private String fileLink;
+    private String completeFileLink;
     private Date lastView;
     private int duration;
     private String durationString;
@@ -32,6 +33,7 @@ public class Movie {
         this.categories = categories;
 
         this.durationString = MetadataExtractor.getDuration(fileLink);
+        setCompleteFileLink(fileLink);
     }
 
     public Movie(String name, double IMDBrating, double personalRating, String fileLink, int duration, List<Category> categories) {
@@ -45,11 +47,22 @@ public class Movie {
         this.durationString = MetadataExtractor.getDuration(fileLink);
 
         updateLastView();
+        setCompleteFileLink(fileLink);
+    }
+
+    private void setCompleteFileLink(String fileLink) {
+        String projectFolder = System.getProperty("user.dir");
+        fileLink = fileLink.replace("\\", "/");
+        this.completeFileLink = projectFolder + "/" + fileLink;
     }
 
     public void updateLastView() {
         java.util.Date now = new java.util.Date();
         this.lastView = new Date(now.getTime());
+    }
+
+    public String getCompleteFileLink() {
+        return this.completeFileLink;
     }
 
     public int getId() {
