@@ -26,9 +26,7 @@ public class MovieLogic {
         if (movies == null) {
             return null;
         }
-
-
-
+        return null;
     }
 
     public ArrayList<Movie> getAllMovies() throws Exception {
