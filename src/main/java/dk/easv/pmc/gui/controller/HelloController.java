@@ -1,6 +1,8 @@
 package dk.easv.pmc.gui.controller;
 
+import dk.easv.pmc.be.Category;
 import dk.easv.pmc.be.ShowAlerts;
+import dk.easv.pmc.bll.CategoryLogic;
 import dk.easv.pmc.gui.HelloApplication;
 import dk.easv.pmc.gui.model.CategoryModel;
 import dk.easv.pmc.gui.model.MovieModel;
@@ -9,6 +11,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -22,14 +25,21 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.controlsfx.control.CheckComboBox;
+
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+import java.util.List;
+import java.util.ResourceBundle;
 
-public class HelloController {
+public class HelloController implements Initializable {
+    private final CategoryLogic catModel = new CategoryLogic();//Slet hvis lykke laver en
     private final PlaybackView playbackView;
+    @FXML private CheckComboBox<Category> ccbGenres;
 
-    public HelloController() {
+    public HelloController() throws Exception {
         this.playbackView = new PlaybackView();
     }
 
@@ -97,6 +107,17 @@ public class HelloController {
             stage.show();
         } catch (Exception e) {
             ShowAlerts.displayError("Kan ikke åbne vinduet!");
+        }
+
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        try {
+            List<Category> categories = catModel.getAllCategories();
+            ccbGenres.getItems().addAll(categories);
+        } catch (Exception e) {
+            ShowAlerts.displayError("Kunne ikke hente kategorier");
         }
 
     }
