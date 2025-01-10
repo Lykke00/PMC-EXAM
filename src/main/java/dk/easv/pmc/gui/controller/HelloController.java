@@ -35,7 +35,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class HelloController implements Initializable {
-    private final CategoryLogic catModel = new CategoryLogic();//Slet hvis lykke laver en
+    private final CategoryModel catModel = new CategoryModel(this);//Slet hvis lykke laver en
     private final PlaybackView playbackView;
     @FXML private CheckComboBox<Category> ccbGenres;
 
@@ -100,8 +100,8 @@ public class HelloController implements Initializable {
 
             CreateEditMovieController controller = loader.getController();
             controller.setStage(stage);
-            controller.setModels(new MovieModel(), new CategoryModel());
-            stage.setTitle("Things");
+            controller.setModels(new MovieModel(), new CategoryModel(this));
+            stage.setTitle("Things");//TODO edit or add
             //stage.setTitle("Add/Edit Movie"); // TODO : få fat i selected items
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
@@ -120,5 +120,9 @@ public class HelloController implements Initializable {
             ShowAlerts.displayError("Kunne ikke hente kategorier");
         }
 
+
+    }
+    public List<Category> getSelectedCategories() {
+        return ccbGenres.getCheckModel().getCheckedItems();
     }
 }

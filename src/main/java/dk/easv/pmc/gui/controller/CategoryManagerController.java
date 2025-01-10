@@ -3,6 +3,7 @@ package dk.easv.pmc.gui.controller;
 import dk.easv.pmc.be.Category;
 import dk.easv.pmc.be.ShowAlerts;
 import dk.easv.pmc.bll.CategoryLogic;
+import dk.easv.pmc.gui.model.CategoryModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -12,7 +13,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 
 public class CategoryManagerController {
-    private CategoryLogic categoryLogic;
+    private CategoryModel categoryModel;
 
     private final ObservableList<Category> categoryList = FXCollections.observableArrayList();
 
@@ -28,7 +29,7 @@ public class CategoryManagerController {
     @FXML
     public void initialize() {
         try {
-            categoryLogic = new CategoryLogic();
+            categoryModel = new CategoryModel(null);
             loadCategories();
         } catch (Exception e) {
             showAlert("Error", "Could not initialize MovieLogic: " + e.getMessage());
@@ -46,7 +47,7 @@ public class CategoryManagerController {
 
         try {
             Category newCategory = new Category(categoryName);
-            Category addedCategory = categoryLogic.createCategory(newCategory);
+            Category addedCategory = categoryModel.createCategory(newCategory);
 
             categoryList.add(addedCategory);
             categoryListView.setItems(categoryList);
@@ -72,7 +73,7 @@ public class CategoryManagerController {
         }
 
         try {
-            boolean isDeleted = categoryLogic.deleteCategory(selectedCategory);
+            boolean isDeleted = categoryModel.deleteCategory(selectedCategory);
             if (isDeleted) {
                 categoryList.remove(selectedCategory);
                 categoryListView.setItems(categoryList);
@@ -86,7 +87,7 @@ public class CategoryManagerController {
 
     private void loadCategories() {
         try {
-            categoryList.setAll(categoryLogic.getAllCategories());
+            categoryList.setAll(categoryModel.getAllCategories());
             categoryListView.setItems(categoryList);
         } catch (Exception e) {
             showAlert("Error", "Could not load categories: " + e.getMessage());

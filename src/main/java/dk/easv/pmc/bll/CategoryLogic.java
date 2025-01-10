@@ -31,17 +31,18 @@ public class CategoryLogic {
     public List<Category> getAllCategories() throws Exception {
         return categoryDAO.getAllCategories();
     }
+
     //Kan muligvis også lave via Databasen
     public ObservableList<Movie> getMoviesbySelectedCategory(ObservableList<Movie> movies) throws Exception {
         if (movies == null) {
             return null;
         }
-        List<Category> categories = getSelectedCategoryies();
+        List<Category> categories = categoryModel.getSelectedCategories();
         ObservableList<Movie> filteredMovies = FXCollections.observableArrayList();
-        for(Movie m: movies){
+        for (Movie m : movies) {
             String name = m.getCategories().toString();
-            for(Category c: categories){
-                if(name.contains(c.getName() + ",")){
+            for (Category c : categories) {
+                if (name.contains(c.getName() + ",")) {
                     filteredMovies.add(m);
                     break;
                 }
@@ -50,9 +51,5 @@ public class CategoryLogic {
 
         }
         return filteredMovies;
-    }
-    //TODO: Implement this method
-    public List<Category> getSelectedCategoryies() {
-
     }
 }
