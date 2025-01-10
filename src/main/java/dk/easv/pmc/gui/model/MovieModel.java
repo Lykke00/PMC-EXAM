@@ -3,6 +3,8 @@ package dk.easv.pmc.gui.model;
 import dk.easv.pmc.be.Movie;
 import dk.easv.pmc.bll.MovieLogic;
 
+import java.util.ArrayList;
+
 public class MovieModel {
     private final MovieLogic movieLogic;
 
@@ -18,7 +20,12 @@ public class MovieModel {
         return this.movieLogic.createMovie(movie);
     }
 
-    public static void main(String[] args) throws Exception {
+    public ArrayList<Movie> getAllMovies() throws Exception {
+        return this.movieLogic.getAllMovies();
+    }
+
+
+        public static void main(String[] args) throws Exception {
         MovieModel movieModel = new MovieModel();
 
         Movie m = new Movie("hej", 2.5, 6, "ggtg", 234, null);

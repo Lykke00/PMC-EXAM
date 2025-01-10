@@ -5,10 +5,8 @@ import dk.easv.pmc.be.Movie;
 import dk.easv.pmc.be.ShowAlerts;
 import dk.easv.pmc.dal.DBConnector;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MovieDAO implements IMovieDAO {
@@ -19,6 +17,72 @@ public class MovieDAO implements IMovieDAO {
             this.dbConnector = new DBConnector();
         } catch (Exception e) {
             throw new Exception("Der skete en fejl ved forbindelse til databasen");
+        }
+    }
+
+    @Override
+    public ArrayList<Movie> getAllMovies() throws Exception {
+        ArrayList<Movie> movies = new ArrayList<>();
+
+        String query = "SELECT * FROM Movie ORDER by Id";
+
+        try (Connection conn = dbConnector.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                int id = rs.getInt("Id");
+                String name = rs.getString("Name");
+                double IMDBRating = rs.getDouble("IMDBRating");
+                double PersonalRating = rs.getDouble("PersonalRating");
+                String FileLink = rs.getString("FileLink");
+                Date LastView = rs.getDate("LastView");
+
+                ArrayList<Category> categories = getCategoriesForMovie(id);
+
+                Movie movie = new Movie(id, name, IMDBRating, PersonalRating, FileLink, LastView, 0, categories);
+
+                movies.add(movie);
+                //playlists.add(new (id, name));
+            }
+
+            return movies;
+        } catch (Exception e) {
+            throw new Exception("Kunne ikke få fat i alle film fra databasen");
+        }
+    }
+
+    private ArrayList<Category> getCategoriesForMovie(int movieId) throws Exception {
+        ArrayList<Category> categories = new ArrayList<>();
+
+        String query = """ 
+                SELECT CategoryId, Name FROM CatMovie
+                        JOIN dbo.Category C on C.Id = CatMovie.CategoryId
+                        where MovieId =  ?
+                        """;
+
+        try (Connection conn = dbConnector.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, movieId);
+
+            ResultSet rs = stmt.executeQuery();
+
+
+            while (rs.next()) {
+                int id = rs.getInt("CategoryId");
+                String name = rs.getString("Name");
+
+                Category category = new Category(id, name);
+                categories.add(category);
+
+
+                //playlists.add(new (id, name));
+            }
+
+            return categories;
+        } catch (Exception e) {
+            throw new Exception("Kunne ikke få fat i alle katagorierne til fom fra databasen. Film id: " + movieId);
         }
     }
 

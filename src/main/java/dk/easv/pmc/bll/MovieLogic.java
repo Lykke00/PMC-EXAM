@@ -6,6 +6,8 @@ import dk.easv.pmc.dal.dao.MovieDAO;
 import javafx.beans.Observable;
 import javafx.collections.ObservableList;
 
+import java.util.ArrayList;
+
 public class MovieLogic {
     private final IMovieDAO movieDAO;
 
@@ -27,5 +29,9 @@ public class MovieLogic {
 
 
 
+    }
+
+    public ArrayList<Movie> getAllMovies() throws Exception {
+        return this.movieDAO.getAllMovies();
     }
 }
