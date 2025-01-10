@@ -15,9 +15,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
@@ -30,6 +28,7 @@ import org.controlsfx.control.CheckComboBox;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -37,7 +36,9 @@ import java.util.ResourceBundle;
 public class HelloController implements Initializable {
     private final CategoryModel catModel = new CategoryModel(this);//Slet hvis lykke laver en
     private final PlaybackView playbackView;
+    public MenuButton officialRating;
     @FXML private CheckComboBox<Category> ccbGenres;
+    private final BigDecimal RATING_INC = new BigDecimal("0.5");
 
     public HelloController() throws Exception {
         this.playbackView = new PlaybackView();
@@ -100,7 +101,7 @@ public class HelloController implements Initializable {
 
             CreateEditMovieController controller = loader.getController();
             controller.setStage(stage);
-            controller.setModels(new MovieModel(), new CategoryModel(this));
+            controller.setModels(new MovieModel(this), new CategoryModel(this));
             stage.setTitle("Things");//TODO edit or add
             //stage.setTitle("Add/Edit Movie"); // TODO : få fat i selected items
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -116,6 +117,13 @@ public class HelloController implements Initializable {
         try {
             List<Category> categories = catModel.getAllCategories();
             ccbGenres.getItems().addAll(categories);
+            officialRating.getItems().clear();
+            for(BigDecimal i = new BigDecimal(0); i.doubleValue() <= 10; i=i.add(RATING_INC)) {
+                MenuItem item = new MenuItem(String.valueOf(i));
+                item.setOnAction(event -> officialRating.setText(item.getText()));
+                officialRating.getItems().add(item);
+            }
+
         } catch (Exception e) {
             ShowAlerts.displayError("Kunne ikke hente kategorier");
         }
@@ -124,5 +132,16 @@ public class HelloController implements Initializable {
     }
     public List<Category> getSelectedCategories() {
         return ccbGenres.getCheckModel().getCheckedItems();
+    }
+
+    public double getSelectedOfficialRating() {
+        if(officialRating.getText().equals("None"))
+            return 0;
+        try{
+            return Double.parseDouble(officialRating.getText());
+        } catch (NumberFormatException e) {
+            return 0;
+        }
+
     }
 }

@@ -41,7 +41,7 @@
                   <Insets left="10.0" />
                </HBox.margin>
             </CheckComboBox>
-            <MenuButton mnemonicParsing="false" style="-fx-background-color: #66d184;" text="MenuButton">
+            <MenuButton mnemonicParsing="false" style="-fx-background-color: #66d184;" text="MenuButton" fx:id="officialRating">
               <items>
                 <MenuItem mnemonicParsing="false" text="None" />
               </items>

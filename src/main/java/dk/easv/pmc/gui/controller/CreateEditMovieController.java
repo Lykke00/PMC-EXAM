@@ -151,8 +151,6 @@ public class CreateEditMovieController{
 
 
    public static void main(String[] args) throws Exception {
-       MovieLogic ml = new MovieLogic();
-       ObservableList<Movie> movies = FXCollections.observableArrayList(ml.getAllMovies());
-        System.out.println(ml.getMoviesbySelectedCategory(movies).toString());
+
     }
 }
