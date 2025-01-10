@@ -1,5 +1,6 @@
 package dk.easv.pmc.gui.controller;
 
+import dk.easv.pmc.be.Movie;
 import dk.easv.pmc.be.ShowAlerts;
 import dk.easv.pmc.gui.HelloApplication;
 import dk.easv.pmc.gui.model.CategoryModel;
@@ -9,12 +10,12 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
@@ -25,12 +26,56 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class HelloController {
+public class HelloController implements Initializable {
     private final PlaybackView playbackView;
+    private MovieModel movieModel;
+    @FXML
+    private TableColumn<Movie, String> tblColTitel;
+    @FXML
+    private TableColumn<Movie, String> tblColGenre;
+    @FXML
+    private TableColumn<Movie, Integer> tblColDuration;
+    @FXML
+    private TableColumn<Movie, Double> tblColRating;
+    @FXML
+    private TableColumn<Movie, Double> tblColOfficialRating;
+    @FXML
+    private TableColumn tblColPlay;
+    @FXML
+    private TableColumn tblColEdit;
+    @FXML
+    private TableView<Movie> movieListView;
+
 
     public HelloController() {
         this.playbackView = new PlaybackView();
+        try {
+            this.movieModel = new MovieModel();
+        } catch (Exception e) {
+            ShowAlerts.displayError(e.getMessage());
+        }
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        populateMovies();
+    }
+
+    private void populateMovies() {
+        tblColTitel.setCellValueFactory(new PropertyValueFactory<>("name"));
+        tblColGenre.setCellValueFactory(new PropertyValueFactory<>("GenresString"));
+        tblColDuration.setCellValueFactory(new PropertyValueFactory<>("Duration"));
+        tblColRating.setCellValueFactory(new PropertyValueFactory<>("PersonalRating"));
+        tblColOfficialRating.setCellValueFactory(new PropertyValueFactory<>("IMDBrating"));
+
+        try {
+            movieListView.setItems(movieModel.getAllMovies());
+        } catch (Exception e) {
+            ShowAlerts.displayError(e.getMessage());
+        }
     }
 
     @FXML
