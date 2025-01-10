@@ -36,7 +36,7 @@
                   <Insets />
                </HBox.margin>
             </TextField>
-            <CheckComboBox fx:id="ccbGenres" maxHeight="100.0" maxWidth="100.0">
+            <CheckComboBox fx:id="ccbGenres" maxHeight="100.0" maxWidth="100.0" style="-fx-background-color: #66d184;">
                 <MenuItem mnemonicParsing="false" text="None" />
                <HBox.margin>
                   <Insets left="10.0" />
@@ -81,7 +81,7 @@
                   <Font name="Verdana" size="12.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" style="-fx-background-color: #66d184;" text="Add" onAction="#onAddClick">
+            <Button mnemonicParsing="false" onAction="#onAddClick" style="-fx-background-color: #66d184;" text="Add">
                <HBox.margin>
                   <Insets left="10.0" />
                </HBox.margin>
@@ -89,7 +89,7 @@
                   <Font name="Verdana" size="12.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" style="-fx-background-color: #66d184;" text="Manage category" onAction="#onManageCategoryClick">
+            <Button mnemonicParsing="false" onAction="#onManageCategoryClick" style="-fx-background-color: #66d184;" text="Manage category">
                <HBox.margin>
                   <Insets left="10.0" />
                </HBox.margin>
