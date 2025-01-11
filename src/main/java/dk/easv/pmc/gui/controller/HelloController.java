@@ -3,17 +3,14 @@ package dk.easv.pmc.gui.controller;
 import dk.easv.pmc.be.Category;
 import dk.easv.pmc.be.Movie;
 import dk.easv.pmc.be.ShowAlerts;
-import dk.easv.pmc.bll.CategoryLogic;
 import dk.easv.pmc.gui.HelloApplication;
 import dk.easv.pmc.gui.model.CategoryModel;
 import dk.easv.pmc.gui.model.MovieModel;
 import dk.easv.pmc.gui.view.PlaybackView;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -66,7 +63,7 @@ public class HelloController implements Initializable {
     public HelloController() throws Exception {
         this.playbackView = new PlaybackView();
         try {
-            this.movieModel = new MovieModel();
+            this.movieModel = new MovieModel(this);
         } catch (Exception e) {
             ShowAlerts.displayError(e.getMessage());
         }
@@ -75,6 +72,7 @@ public class HelloController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         populateMovies();
+        populateCategories();
     }
 
     private void populateMovies() {
@@ -178,8 +176,7 @@ public class HelloController implements Initializable {
 
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void populateCategories() {
         try {
             List<Category> categories = catModel.getAllCategories();
             ccbGenres.getItems().addAll(categories);
