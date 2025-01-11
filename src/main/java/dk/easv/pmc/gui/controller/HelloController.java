@@ -1,7 +1,9 @@
 package dk.easv.pmc.gui.controller;
 
+import dk.easv.pmc.be.Category;
 import dk.easv.pmc.be.Movie;
 import dk.easv.pmc.be.ShowAlerts;
+import dk.easv.pmc.bll.CategoryLogic;
 import dk.easv.pmc.gui.HelloApplication;
 import dk.easv.pmc.gui.model.CategoryModel;
 import dk.easv.pmc.gui.model.MovieModel;
@@ -24,14 +26,24 @@ import javafx.scene.media.MediaView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import org.controlsfx.control.CheckComboBox;
+
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.math.BigDecimal;
+import java.net.URL;
+import java.util.List;
+import java.util.ResourceBundle;
 
 public class HelloController implements Initializable {
+    private final CategoryModel catModel = new CategoryModel(this);//Slet hvis lykke laver en
     private final PlaybackView playbackView;
+    public MenuButton officialRating;
+    @FXML private CheckComboBox<Category> ccbGenres;
+    private final BigDecimal RATING_INC = new BigDecimal("0.5");
     private MovieModel movieModel;
     @FXML
     private TableColumn<Movie, String> tblColTitel;
@@ -51,7 +63,7 @@ public class HelloController implements Initializable {
     private TableView<Movie> movieListView;
 
 
-    public HelloController() {
+    public HelloController() throws Exception {
         this.playbackView = new PlaybackView();
         try {
             this.movieModel = new MovieModel();
@@ -155,13 +167,46 @@ public class HelloController implements Initializable {
 
             CreateEditMovieController controller = loader.getController();
             controller.setStage(stage);
-            controller.setModels(new MovieModel(), new CategoryModel());
-            stage.setTitle("Things");
+            controller.setModels(new MovieModel(this), new CategoryModel(this));
+            stage.setTitle("Things");//TODO edit or add
             //stage.setTitle("Add/Edit Movie"); // TODO : få fat i selected items
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
         } catch (Exception e) {
             ShowAlerts.displayError("Kan ikke åbne vinduet!");
+        }
+
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        try {
+            List<Category> categories = catModel.getAllCategories();
+            ccbGenres.getItems().addAll(categories);
+            officialRating.getItems().clear();
+            for(BigDecimal i = new BigDecimal(0); i.doubleValue() <= 10; i=i.add(RATING_INC)) {
+                MenuItem item = new MenuItem(String.valueOf(i));
+                item.setOnAction(event -> officialRating.setText(item.getText()));
+                officialRating.getItems().add(item);
+            }
+
+        } catch (Exception e) {
+            ShowAlerts.displayError("Kunne ikke hente kategorier");
+        }
+
+
+    }
+    public List<Category> getSelectedCategories() {
+        return ccbGenres.getCheckModel().getCheckedItems();
+    }
+
+    public double getSelectedOfficialRating() {
+        if(officialRating.getText().equals("None"))
+            return 0;
+        try{
+            return Double.parseDouble(officialRating.getText());
+        } catch (NumberFormatException e) {
+            return 0;
         }
 
     }

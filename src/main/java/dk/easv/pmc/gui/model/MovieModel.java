@@ -2,6 +2,7 @@ package dk.easv.pmc.gui.model;
 
 import dk.easv.pmc.be.Movie;
 import dk.easv.pmc.bll.MovieLogic;
+import dk.easv.pmc.gui.controller.HelloController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -9,10 +10,12 @@ import java.util.ArrayList;
 
 public class MovieModel {
     private final MovieLogic movieLogic;
+    private final HelloController hc;
     private ObservableList<Movie> movies;
 
-    public MovieModel() throws Exception {
-        movieLogic = new MovieLogic();
+    public MovieModel(HelloController hc) throws Exception {
+        this.hc = hc;
+        movieLogic = new MovieLogic(this);
     }
 
     public boolean deleteMovie(Movie movie) throws Exception {
@@ -26,6 +29,9 @@ public class MovieModel {
     public ArrayList<Movie> getAllMoviesFromDb() throws Exception {
         return this.movieLogic.getAllMovies();
     }
+    public double getSelectedOfficialRating(){
+        return hc.getSelectedOfficialRating();
+    }
 
     public ObservableList<Movie> getAllMovies() throws Exception {
         if (this.movies == null) {
@@ -34,8 +40,8 @@ public class MovieModel {
         return this.movies;
     }
 
-    public static void main(String[] args) throws Exception {
-        MovieModel movieModel = new MovieModel();
+        public static void main(String[] args) throws Exception {
+        MovieModel movieModel = new MovieModel(null);
 
         Movie m = new Movie("hej", 2.5, 6, "ggtg", 234, null);
 
