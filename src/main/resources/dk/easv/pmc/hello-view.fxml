@@ -31,7 +31,7 @@
                   <Font name="Verdana Bold" size="12.0" />
                </font>
             </Label>
-            <TextField maxWidth="140.0" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" style="-fx-background-color: #ebfcf0;">
+            <TextField maxWidth="140.0" minHeight="-Infinity" minWidth="-Infinity" prefWidth="150.0" style="-fx-background-color: #ebfcf0;" fx:id="txtSearchBar">
                <HBox.margin>
                   <Insets />
                </HBox.margin>
@@ -49,7 +49,7 @@
                   <Insets left="10.0" right="10.0" />
                </HBox.margin>
             </MenuButton>
-            <Button mnemonicParsing="false" style="-fx-background-color: #66d184;" text="Clear">
+            <Button mnemonicParsing="false" style="-fx-background-color: #66d184;" text="Clear" onAction="#onClear">
                <HBox.margin>
                   <Insets left="10.0" />
                </HBox.margin>

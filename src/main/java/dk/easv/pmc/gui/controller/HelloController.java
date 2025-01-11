@@ -36,7 +36,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class HelloController implements Initializable {
-    private final CategoryModel catModel = new CategoryModel(this);//Slet hvis lykke laver en
+    private final CategoryModel catModel = new CategoryModel(this);
     private final PlaybackView playbackView;
     public MenuButton officialRating;
     @FXML private CheckComboBox<Category> ccbGenres;
@@ -58,6 +58,8 @@ public class HelloController implements Initializable {
     private TableColumn tblColEdit;
     @FXML
     private TableView<Movie> movieListView;
+    @FXML
+    private TextField txtSearchBar;
 
 
     public HelloController() throws Exception {
@@ -206,5 +208,12 @@ public class HelloController implements Initializable {
             return 0;
         }
 
+    }
+
+    @FXML
+    private void onClear(ActionEvent event){
+        txtSearchBar.clear();
+        officialRating.setText("None");
+        ccbGenres.getCheckModel().clearChecks();
     }
 }
