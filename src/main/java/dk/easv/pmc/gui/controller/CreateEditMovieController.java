@@ -106,8 +106,9 @@ public class CreateEditMovieController{
         else{
             try{
                 duration = Integer.parseInt(MetadataExtractor.getDuration(path));
+                txtDuration.setText(String.valueOf(duration));
             } catch (NumberFormatException e) {
-
+                ShowAlerts.displayError("Kunne ikke hente længden af filen");
             }
         }
 
@@ -135,6 +136,7 @@ public class CreateEditMovieController{
         if (file != null) {
             txtFilePath.setText(file.getPath());
             //parent.getMyTunesModel().setDurationOfFile(file.getPath(), this);
+            txtDuration.setText(MetadataExtractor.getDuration(file.getPath()));
         }
     }
 

@@ -53,6 +53,7 @@ public class Movie {
     private void setCompleteFileLink(String fileLink) {
         if (fileLink.contains(":")){
             this.completeFileLink = fileLink;
+            System.out.println("Debug message 1");
             return;
         }
         String projectFolder = System.getProperty("user.dir");
