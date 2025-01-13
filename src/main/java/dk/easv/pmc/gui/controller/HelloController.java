@@ -216,4 +216,18 @@ public class HelloController implements Initializable {
         officialRating.setText("None");
         ccbGenres.getCheckModel().clearChecks();
     }
+    @FXML
+    private void onRemove(ActionEvent event) {
+        try {
+            Movie movie = movieListView.getSelectionModel().getSelectedItem();
+            if (movie == null) {
+                ShowAlerts.displayError("Vælg en film at slette");
+                return;
+            }
+            movieModel.deleteMovie(movie);
+            movieListView.getItems().remove(movie);
+        } catch (Exception e) {
+            ShowAlerts.displayError("Kunne ikke slette film");
+        }
+    }
 }
