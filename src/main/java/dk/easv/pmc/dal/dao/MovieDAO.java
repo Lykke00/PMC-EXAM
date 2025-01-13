@@ -24,6 +24,9 @@ public class MovieDAO implements IMovieDAO {
     }
 
     public boolean doesMovieExist(String filePath) {
+        if (filePath.contains(":")){
+            return Files.exists(Paths.get(filePath));
+        }
         String projectFolder = System.getProperty("user.dir");
         filePath = filePath.replace("\\", "/");
 
