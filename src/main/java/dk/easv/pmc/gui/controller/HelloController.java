@@ -167,7 +167,7 @@ public class HelloController implements Initializable {
 
             CreateEditMovieController controller = loader.getController();
             controller.setStage(stage);
-            controller.setModels(new MovieModel(this), new CategoryModel(this));
+            controller.setModels(movieModel, catModel);
             stage.setTitle("Things");//TODO edit or add
             //stage.setTitle("Add/Edit Movie"); // TODO : få fat i selected items
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -225,7 +225,7 @@ public class HelloController implements Initializable {
                 return;
             }
             movieModel.deleteMovie(movie);
-            movieListView.getItems().remove(movie);
+            //movieListView.getItems().remove(movie);
         } catch (Exception e) {
             ShowAlerts.displayError("Kunne ikke slette film");
         }
