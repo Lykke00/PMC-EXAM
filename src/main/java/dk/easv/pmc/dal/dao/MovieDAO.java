@@ -176,5 +176,68 @@ public class MovieDAO implements IMovieDAO {
             ShowAlerts.displayError(e.getMessage());
             throw new Exception("Kunne ikke tilføje kategorierne");
         }
+
     }
+
+    public List<Movie> getOldLowRatedMovies() throws Exception {
+        String sql = """
+        SELECT * FROM Movie
+        WHERE PersonalRating < 6
+        AND LastView < DATEADD(YEAR, -2, GETDATE());
+    """;
+
+        List<Movie> oldLowRatedMovies = new ArrayList<>();
+
+        try (Connection conn = dbConnector.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                oldLowRatedMovies.add(new Movie(
+                        rs.getInt("Id"),               // 1. id
+                        rs.getString("Name"),          // 2. name
+                        rs.getDouble("IMDBRating"),    // 3. IMDBrating
+                        rs.getDouble("PersonalRating"),// 4. personalRating
+                        rs.getString("FileLink"),
+                        rs.getDate("LastView"),   // 5. fileLink
+                        rs.getInt("Duration"),         // 6. duration
+                        fetchCategoriesForMovie(rs.getInt("Id")) // 7. categories (hent kategorier for filmen)
+                ));
+            }
+        } catch (SQLException e) {
+            throw new Exception("Could not fetch old low-rated movies: " + e.getMessage());
+        }
+
+        return oldLowRatedMovies;
+    }
+
+    private List<Category> fetchCategoriesForMovie(int movieId) throws Exception {
+        List<Category> categories = new ArrayList<>();
+        String sql = """
+        SELECT c.Id, c.Name
+        FROM Category c
+        INNER JOIN CatMovie cm ON c.Id = cm.CategoryId
+        WHERE cm.MovieId = ?
+    """;
+
+        try (Connection conn = dbConnector.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, movieId);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    categories.add(new Category(
+                            rs.getInt("Id"), // Kategoriens ID
+                            rs.getString("Name") // Kategoriens navn
+                    ));
+                }
+            }
+        } catch (SQLException e) {
+            throw new Exception("Could not fetch categories for movie: " + e.getMessage());
+        }
+
+        return categories;
+    }
+
+
 }

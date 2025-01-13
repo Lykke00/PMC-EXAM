@@ -46,7 +46,12 @@ public class MovieLogic {
         }
 
 
+
       return filteredOfficialRating;
+    }
+
+    public List<Movie> getOldLowRatedMovies() throws Exception {
+        return movieDAO.getOldLowRatedMovies();
     }
 
 

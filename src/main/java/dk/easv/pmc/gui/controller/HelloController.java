@@ -3,6 +3,7 @@ package dk.easv.pmc.gui.controller;
 import dk.easv.pmc.be.Category;
 import dk.easv.pmc.be.Movie;
 import dk.easv.pmc.be.ShowAlerts;
+import dk.easv.pmc.bll.MovieLogic;
 import dk.easv.pmc.gui.HelloApplication;
 import dk.easv.pmc.gui.model.CategoryModel;
 import dk.easv.pmc.gui.model.MovieModel;
@@ -42,6 +43,7 @@ public class HelloController implements Initializable {
     @FXML private CheckComboBox<Category> ccbGenres;
     private final BigDecimal RATING_INC = new BigDecimal("0.5");
     private MovieModel movieModel;
+    private final MovieLogic movieLogic;
     @FXML
     private TableColumn<Movie, String> tblColTitel;
     @FXML
@@ -208,6 +210,7 @@ public class HelloController implements Initializable {
             return 0;
         }
 
+
     }
 
     @FXML
@@ -215,5 +218,32 @@ public class HelloController implements Initializable {
         txtSearchBar.clear();
         officialRating.setText("None");
         ccbGenres.getCheckModel().clearChecks();
+    }
+    @FXML
+    public void checkOldLowRatedMovies() {
+        try {
+            List<Movie> oldLowRatedMovies = movieLogic.getOldLowRatedMovies();
+
+            if (!oldLowRatedMovies.isEmpty()) {
+                StringBuilder warningMessage = new StringBuilder("The following movies have a low rating and haven't been opened in over 2 years:\n\n");
+
+                for (Movie movie : oldLowRatedMovies) {
+                    warningMessage.append("- ").append(movie.getName()).append("\n");
+                }
+
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Old Low-Rated Movies");
+                alert.setHeaderText("Consider deleting these movies:");
+                alert.setContentText(warningMessage.toString());
+                alert.showAndWait();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Could not check for old low-rated movies.");
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }
     }
 }
