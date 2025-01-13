@@ -19,11 +19,14 @@ public class MovieModel {
     }
 
     public boolean deleteMovie(Movie movie) throws Exception {
+        movies.remove(movie);
         return this.movieLogic.deleteMovie(movie);
     }
 
     public Movie createMovie(Movie movie) throws Exception {
-        return this.movieLogic.createMovie(movie);
+        Movie m = movieLogic.createMovie(movie);
+        movies.add(m);
+        return m;
     }
 
     public ArrayList<Movie> getAllMoviesFromDb() throws Exception {

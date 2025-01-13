@@ -3,6 +3,7 @@ package dk.easv.pmc.gui.controller;
 import dk.easv.pmc.be.Category;
 import dk.easv.pmc.be.Movie;
 import dk.easv.pmc.be.ShowAlerts;
+import dk.easv.pmc.bll.MetadataExtractor;
 import dk.easv.pmc.bll.MovieLogic;
 import dk.easv.pmc.gui.model.CategoryModel;
 import dk.easv.pmc.gui.model.MovieModel;
@@ -82,7 +83,7 @@ public class CreateEditMovieController{
         }
 
         // txtDuration - er disabled
-        int duration = 0; // TODO : get duration
+        double duration = 0; // TODO : get duration
         double ratingPers = 0;
         double ratingOff = 0;
         try{
@@ -101,6 +102,14 @@ public class CreateEditMovieController{
         if (path.isEmpty()){
             ShowAlerts.displayError("Path is empty");
             return;
+        }
+        else{
+            try{
+                duration = Double.parseDouble(MetadataExtractor.getDuration(path));
+                txtDuration.setText(String.valueOf(duration));
+            } catch (NumberFormatException e) {
+                ShowAlerts.displayError("Kunne ikke hente længden af filen");
+            }
         }
 
         Movie movie = new Movie(title, ratingOff, ratingPers, path, duration, chosenCategories);
@@ -127,6 +136,7 @@ public class CreateEditMovieController{
         if (file != null) {
             txtFilePath.setText(file.getPath());
             //parent.getMyTunesModel().setDurationOfFile(file.getPath(), this);
+            txtDuration.setText(MetadataExtractor.getDuration(file.getPath()));
         }
     }
 

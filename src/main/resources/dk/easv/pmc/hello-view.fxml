@@ -75,7 +75,7 @@
       </TableView>
       <HBox>
          <children>
-            <Button mnemonicParsing="false" style="-fx-background-color: #66d184;" text="Remove">
+            <Button mnemonicParsing="false" style="-fx-background-color: #66d184;" text="Remove" onAction="#onRemove">
                <font>
                   <Font name="Verdana" size="12.0" />
                </font>

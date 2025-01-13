@@ -43,7 +43,6 @@ public class HelloController implements Initializable {
     @FXML private CheckComboBox<Category> ccbGenres;
     private final BigDecimal RATING_INC = new BigDecimal("0.5");
     private MovieModel movieModel;
-    private final MovieLogic movieLogic;
     @FXML
     private TableColumn<Movie, String> tblColTitel;
     @FXML
@@ -169,7 +168,7 @@ public class HelloController implements Initializable {
 
             CreateEditMovieController controller = loader.getController();
             controller.setStage(stage);
-            controller.setModels(new MovieModel(this), new CategoryModel(this));
+            controller.setModels(movieModel, catModel);
             stage.setTitle("Things");//TODO edit or add
             //stage.setTitle("Add/Edit Movie"); // TODO : få fat i selected items
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -210,7 +209,6 @@ public class HelloController implements Initializable {
             return 0;
         }
 
-
     }
 
     @FXML
@@ -218,6 +216,20 @@ public class HelloController implements Initializable {
         txtSearchBar.clear();
         officialRating.setText("None");
         ccbGenres.getCheckModel().clearChecks();
+    }
+    @FXML
+    private void onRemove(ActionEvent event) {
+        try {
+            Movie movie = movieListView.getSelectionModel().getSelectedItem();
+            if (movie == null) {
+                ShowAlerts.displayError("Vælg en film at slette");
+                return;
+            }
+            movieModel.deleteMovie(movie);
+            //movieListView.getItems().remove(movie);
+        } catch (Exception e) {
+            ShowAlerts.displayError("Kunne ikke slette film");
+        }
     }
     @FXML
     public void checkOldLowRatedMovies() {
