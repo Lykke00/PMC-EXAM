@@ -51,6 +51,9 @@ public class Movie {
     }
 
     private void setCompleteFileLink(String fileLink) {
+        if (fileLink.contains(":")){
+            return;
+        }
         String projectFolder = System.getProperty("user.dir");
         fileLink = fileLink.replace("\\", "/");
         this.completeFileLink = projectFolder + "/" + fileLink;

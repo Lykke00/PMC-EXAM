@@ -3,6 +3,7 @@ package dk.easv.pmc.gui.controller;
 import dk.easv.pmc.be.Category;
 import dk.easv.pmc.be.Movie;
 import dk.easv.pmc.be.ShowAlerts;
+import dk.easv.pmc.bll.MetadataExtractor;
 import dk.easv.pmc.bll.MovieLogic;
 import dk.easv.pmc.gui.model.CategoryModel;
 import dk.easv.pmc.gui.model.MovieModel;
@@ -101,6 +102,13 @@ public class CreateEditMovieController{
         if (path.isEmpty()){
             ShowAlerts.displayError("Path is empty");
             return;
+        }
+        else{
+            try{
+                duration = Integer.parseInt(MetadataExtractor.getDuration(path));
+            } catch (NumberFormatException e) {
+
+            }
         }
 
         Movie movie = new Movie(title, ratingOff, ratingPers, path, duration, chosenCategories);
