@@ -3,7 +3,6 @@ package dk.easv.pmc.gui.controller;
 import dk.easv.pmc.be.Category;
 import dk.easv.pmc.be.Movie;
 import dk.easv.pmc.be.ShowAlerts;
-import dk.easv.pmc.bll.MovieLogic;
 import dk.easv.pmc.gui.HelloApplication;
 import dk.easv.pmc.gui.model.CategoryModel;
 import dk.easv.pmc.gui.model.MovieModel;
@@ -60,7 +59,7 @@ public class HelloController implements Initializable {
     @FXML
     private TableView<Movie> movieListView;
     @FXML
-    private TextField txtSearchBar;
+    private TextField txtSearchField;
 
 
     public HelloController() throws Exception {
@@ -76,6 +75,10 @@ public class HelloController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         populateMovies();
         populateCategories();
+        searchHandler();
+
+        // lad vær med at fokuser på tekstfelt når programmet starter
+        txtSearchField.setFocusTraversable(false);
     }
 
     private void populateMovies() {
@@ -176,7 +179,6 @@ public class HelloController implements Initializable {
         } catch (Exception e) {
             ShowAlerts.displayError("Kan ikke åbne vinduet!");
         }
-
     }
 
     public void populateCategories() {
@@ -213,7 +215,7 @@ public class HelloController implements Initializable {
 
     @FXML
     private void onClear(ActionEvent event){
-        txtSearchBar.clear();
+        txtSearchField.clear();
         officialRating.setText("None");
         ccbGenres.getCheckModel().clearChecks();
     }
@@ -230,6 +232,12 @@ public class HelloController implements Initializable {
         } catch (Exception e) {
             ShowAlerts.displayError("Kunne ikke slette film");
         }
+    }
+
+    private void searchHandler() {
+        txtSearchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            movieListView.setItems(movieModel.searchMovie(newValue));
+        });
     }
     @FXML
     public void checkOldLowRatedMovies() {
