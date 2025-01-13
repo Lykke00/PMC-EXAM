@@ -18,11 +18,11 @@ public class Movie {
     private String fileLink;
     private String completeFileLink;
     private Date lastView;
-    private int duration;
+    private double duration;
     private String durationString;
     private List<Category> categories;
 
-    public Movie(int id, String name, double IMDBrating, double personalRating, String fileLink, Date lastView, int duration, List<Category> categories) {
+    public Movie(int id, String name, double IMDBrating, double personalRating, String fileLink, Date lastView, double duration, List<Category> categories) {
         this.id = id;
         this.name = name;
         this.IMDBrating = IMDBrating;
@@ -32,11 +32,11 @@ public class Movie {
         this.duration = duration;
         this.categories = categories;
 
-        this.durationString = MetadataExtractor.getDuration(fileLink);
+        //this.durationString = MetadataExtractor.getDuration(fileLink);
         setCompleteFileLink(fileLink);
     }
 
-    public Movie(String name, double IMDBrating, double personalRating, String fileLink, int duration, List<Category> categories) {
+    public Movie(String name, double IMDBrating, double personalRating, String fileLink, double duration, List<Category> categories) {
         this.name = name;
         this.IMDBrating = IMDBrating;
         this.personalRating = personalRating;
@@ -118,7 +118,7 @@ public class Movie {
         this.lastView = lastView;
     }
 
-    public int getDuration() {
+    public double getDuration() {
         return duration;
     }
 
@@ -145,6 +145,6 @@ public class Movie {
     }
 
     public String getDurationString() {
-        return this.durationString;
+        return duration + "";
     }
 }

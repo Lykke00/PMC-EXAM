@@ -52,12 +52,13 @@ public class MovieDAO implements IMovieDAO {
                 double PersonalRating = rs.getDouble("PersonalRating");
                 String FileLink = rs.getString("FileLink");
                 Date LastView = rs.getDate("LastView");
+                double duration = rs.getDouble("Duration");
 
                 if (!doesMovieExist(FileLink))
                     continue;
 
                 ArrayList<Category> categories = getCategoriesForMovie(id);
-                Movie movie = new Movie(id, name, IMDBRating, PersonalRating, FileLink, LastView, 0, categories);
+                Movie movie = new Movie(id, name, IMDBRating, PersonalRating, FileLink, LastView, duration, categories);
 
                 movies.add(movie);
             }
@@ -132,7 +133,7 @@ public class MovieDAO implements IMovieDAO {
             stmt.setDouble(3, movie.getPersonalRating());
             stmt.setString(4, movie.getFileLink());
             stmt.setDate(5, movie.getLastView());
-            stmt.setInt(6, movie.getDuration());
+            stmt.setDouble(6, movie.getDuration());
 
 
             int rowsAffected = stmt.executeUpdate();

@@ -83,7 +83,7 @@ public class CreateEditMovieController{
         }
 
         // txtDuration - er disabled
-        int duration = 0; // TODO : get duration
+        double duration = 0; // TODO : get duration
         double ratingPers = 0;
         double ratingOff = 0;
         try{
@@ -105,7 +105,7 @@ public class CreateEditMovieController{
         }
         else{
             try{
-                duration = Integer.parseInt(MetadataExtractor.getDuration(path));
+                duration = Double.parseDouble(MetadataExtractor.getDuration(path));
                 txtDuration.setText(String.valueOf(duration));
             } catch (NumberFormatException e) {
                 ShowAlerts.displayError("Kunne ikke hente længden af filen");
