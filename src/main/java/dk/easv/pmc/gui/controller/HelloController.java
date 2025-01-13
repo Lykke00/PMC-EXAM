@@ -49,6 +49,8 @@ public class HelloController implements Initializable {
     private TableColumn tblColEdit;
     @FXML
     private TableView<Movie> movieListView;
+    @FXML
+    private TextField txtSearchField;
 
 
     public HelloController() {
@@ -63,6 +65,10 @@ public class HelloController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         populateMovies();
+        searchHandler();
+
+        // lad vær med at fokuser på tekstfelt når programmet starter
+        txtSearchField.setFocusTraversable(false);
     }
 
     private void populateMovies() {
@@ -163,6 +169,12 @@ public class HelloController implements Initializable {
         } catch (Exception e) {
             ShowAlerts.displayError("Kan ikke åbne vinduet!");
         }
-
     }
+
+    private void searchHandler() {
+        txtSearchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            movieListView.setItems(movieModel.searchMovie(newValue));
+        });
+    }
+
 }

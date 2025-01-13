@@ -6,6 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MovieModel {
     private final MovieLogic movieLogic;
@@ -13,14 +14,23 @@ public class MovieModel {
 
     public MovieModel() throws Exception {
         movieLogic = new MovieLogic();
+        movies = FXCollections.observableArrayList(movieLogic.getAllMovies());
     }
 
     public boolean deleteMovie(Movie movie) throws Exception {
-        return this.movieLogic.deleteMovie(movie);
+        boolean deleted = this.deleteMovie(movie);
+        if (deleted)
+            movies.remove(movie); // hold den cached liste i programmet opdateret
+
+        return deleted;
     }
 
     public Movie createMovie(Movie movie) throws Exception {
-        return this.movieLogic.createMovie(movie);
+        Movie created = this.movieLogic.createMovie(movie);
+        if (created != null)
+            movies.add(created); // hold den cached liste i programmet opdateret
+
+        return created;
     }
 
     public ArrayList<Movie> getAllMoviesFromDb() throws Exception {
@@ -53,4 +63,13 @@ public class MovieModel {
         //}
 }
 
+    public ObservableList<Movie> searchMovie(String searchWord) {
+        List<Movie> searchMovies = new ArrayList<>();
+        for(Movie movie : movies) {
+            if (movie.getName().toLowerCase().contains(searchWord.toLowerCase())) {
+                searchMovies.add(movie);
+            }
+        }
+        return FXCollections.observableArrayList(searchMovies);
+    }
 }
