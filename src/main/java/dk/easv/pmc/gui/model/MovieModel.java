@@ -7,6 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MovieModel {
     private final MovieLogic movieLogic;
@@ -62,4 +63,7 @@ public class MovieModel {
         //}
 }
 
+    public List<Movie> getOldLowRatedMovies() throws Exception {
+        return movieLogic.getOldLowRatedMovies();
+    }
 }

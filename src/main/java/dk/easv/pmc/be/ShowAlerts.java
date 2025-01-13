@@ -2,6 +2,7 @@ package dk.easv.pmc.be;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.layout.Region;
 
 public class ShowAlerts {
     public static void displayError(String errorMessage){
@@ -19,5 +20,14 @@ public class ShowAlerts {
             return true;
         }
         return false;
+    }
+
+    public static void displayOldMovies(String message) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Old Low-Rated Movies");
+        alert.setHeaderText("Consider deleting these movies:");
+        alert.setContentText(message);
+        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+        alert.showAndWait();
     }
 }

@@ -234,28 +234,20 @@ public class HelloController implements Initializable {
     @FXML
     public void checkOldLowRatedMovies() {
         try {
-            List<Movie> oldLowRatedMovies = movieLogic.getOldLowRatedMovies();
+            List<Movie> oldLowRatedMovies = movieModel.getOldLowRatedMovies();
 
             if (!oldLowRatedMovies.isEmpty()) {
                 StringBuilder warningMessage = new StringBuilder("The following movies have a low rating and haven't been opened in over 2 years:\n\n");
 
                 for (Movie movie : oldLowRatedMovies) {
-                    warningMessage.append("- ").append(movie.getName()).append("\n");
+                    warningMessage.append("- ").append(movie.getName());
                 }
-
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Old Low-Rated Movies");
-                alert.setHeaderText("Consider deleting these movies:");
-                alert.setContentText(warningMessage.toString());
-                alert.showAndWait();
+                System.out.println(warningMessage.toString());
+                ShowAlerts.displayOldMovies(warningMessage.toString());
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Could not check for old low-rated movies.");
-            alert.setContentText(e.getMessage());
-            alert.showAndWait();
+            ShowAlerts.displayError("Could not check for old low-rated movies.");
         }
     }
 }
