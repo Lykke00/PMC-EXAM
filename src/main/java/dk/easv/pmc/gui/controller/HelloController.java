@@ -59,7 +59,7 @@ public class HelloController implements Initializable {
     @FXML
     private TableView<Movie> movieListView;
     @FXML
-    private TextField txtSearchBar;
+    private TextField txtSearchField;
 
 
     public HelloController() throws Exception {
@@ -75,6 +75,10 @@ public class HelloController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         populateMovies();
         populateCategories();
+        searchHandler();
+
+        // lad vær med at fokuser på tekstfelt når programmet starter
+        txtSearchField.setFocusTraversable(false);
     }
 
     private void populateMovies() {
@@ -175,7 +179,6 @@ public class HelloController implements Initializable {
         } catch (Exception e) {
             ShowAlerts.displayError("Kan ikke åbne vinduet!");
         }
-
     }
 
     public void populateCategories() {
@@ -212,7 +215,7 @@ public class HelloController implements Initializable {
 
     @FXML
     private void onClear(ActionEvent event){
-        txtSearchBar.clear();
+        txtSearchField.clear();
         officialRating.setText("None");
         ccbGenres.getCheckModel().clearChecks();
     }
@@ -229,5 +232,11 @@ public class HelloController implements Initializable {
         } catch (Exception e) {
             ShowAlerts.displayError("Kunne ikke slette film");
         }
+    }
+
+    private void searchHandler() {
+        txtSearchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            movieListView.setItems(movieModel.searchMovie(newValue));
+        });
     }
 }
