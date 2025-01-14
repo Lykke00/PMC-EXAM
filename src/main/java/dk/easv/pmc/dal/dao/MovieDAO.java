@@ -266,8 +266,7 @@ public class MovieDAO implements IMovieDAO {
             stmt.setString(4, movie.getFileLink());
             stmt.setDouble(5, movie.getDuration());
             stmt.setInt(6, movie.getId());
-            int rowsAffected = stmt.executeUpdate();
-            System.out.println(rowsAffected);
+
             setMovieCategories(movie);
             return true;
 
