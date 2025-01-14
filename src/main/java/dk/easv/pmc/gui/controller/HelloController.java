@@ -7,6 +7,8 @@ import dk.easv.pmc.gui.HelloApplication;
 import dk.easv.pmc.gui.model.CategoryModel;
 import dk.easv.pmc.gui.model.MovieModel;
 import dk.easv.pmc.gui.view.PlaybackView;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -231,6 +233,21 @@ public class HelloController implements Initializable {
         txtSearchField.textProperty().addListener((observable, oldValue, newValue) -> {
             movieListView.setItems(movieModel.searchMovie(newValue));
         });
+        /*
+        officialRating.onHidingProperty().addListener((observable, oldValue, newValue) -> {
+            System.out.println("Official rating changed");
+            movieListView.setItems(movieModel.getMoviesByOfficialRating(movieListView.getItems()));
+        });
+
+         */
+        officialRating.addEventHandler(MenuButton.ON_HIDDEN, event -> {
+            ObservableList<Movie> movies = movieModel.getMoviesByOfficialRating(movieListView.getItems());
+            movieListView.setItems(movies);
+        });
+        ccbGenres.addEventHandler(ComboBox.ON_HIDDEN, event -> {
+            //Først så finder vi de film der er søgt på i søgefeltet. Derefter filtrerer vi på de valgt rating, hvor vi tilsidst filtrerer på de valgte kategorier.
+            movieListView.setItems(catModel.getMoviesbySelectedCategory(movieModel.getMoviesByOfficialRating(movieModel.searchMovie(txtSearchField.getText()))));
+        });
     }
     @FXML
     public void checkOldLowRatedMovies() {
@@ -251,4 +268,5 @@ public class HelloController implements Initializable {
             ShowAlerts.displayError("Could not check for old low-rated movies.");
         }
     }
+
 }
