@@ -54,7 +54,9 @@ public class MovieLogic {
         return movieDAO.getOldLowRatedMovies();
     }
 
-
+    public boolean updateMovie(Movie movie) throws Exception{
+        return movieDAO.updateMovie(movie);
+    }
 
 }
 

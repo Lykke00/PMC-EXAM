@@ -22,6 +22,7 @@ public class CreateEditMovieController{
     private Stage stage;
     private List<Category> chosenCategories = new ArrayList<>();
     private Map<String, Category> catMap = new HashMap<>();
+    private Movie editMovie = null;
 
 
     @FXML
@@ -47,6 +48,21 @@ public class CreateEditMovieController{
     }
     public void setStage(Stage window){
         this.stage = window;
+    }
+    public void setEditedMovie(Movie movie){
+        // fyld tingene ud
+        txtTitle.setText(movie.getName());
+
+        chosenCategories = movie.getCategories();
+        for (Category cat : chosenCategories){
+            changeCategory(cat.getName());
+        }
+
+        txtDuration.setText(MetadataExtractor.getDuration(movie.getCompleteFileLink()));
+        txtRating.setText(movie.getPersonalRating() + "");
+        txtRatingOff.setText(movie.getIMDBrating() + "");
+        txtFilePath.setText(movie.getFileLink());
+        editMovie = movie;
     }
 
     private void init(){
@@ -80,19 +96,19 @@ public class CreateEditMovieController{
         }
 
         // txtDuration - er disabled
-        double duration = 0; // TODO : get duration
+        double duration = 0;
         double ratingPers = 0;
         double ratingOff = 0;
         try{
             ratingOff = Double.parseDouble(txtRatingOff.getText());
         }
         catch (Exception e) {
-            //e.printStackTrace(); - jeg er ikke sikker på at den returner - men man ved aldrig
+           // den officielle rating sættes til 0 hvis intet er udfyldt - hvis dette udkom ikke er ønsket - så sæt noget her (ShowAlerts el. lign.) med return statement
         }
         try {
             ratingPers = Double.parseDouble(txtRating.getText());
         } catch (Exception e) {
-            //e.printStackTrace(); // TODO : display errors - also up there ^^^^^^
+            //e.printStackTrace(); // Dette er det samme eksempel om ovenfor ^^^^^
         }
 
         String path = txtFilePath.getText().trim();
@@ -109,16 +125,34 @@ public class CreateEditMovieController{
             }
         }
 
-        Movie movie = new Movie(title, ratingOff, ratingPers, path, duration, chosenCategories);
-        try{
-            System.out.println(chosenCategories);
-            mm.createMovie(movie);
-            stage.close();
-        }
-        catch (Exception e) {
-            ShowAlerts.displayError("Kunne ikke tilføje filmen. " + e.getMessage());
-        }
+        // opdatere filmen
+        if (editMovie != null){
+            try{
+                editMovie.setName(title);
+                editMovie.setCategories(chosenCategories);
+                editMovie.setIMDBrating(ratingOff);
+                editMovie.setPersonalRating(ratingPers);
+                editMovie.setFileLink(path);
+                editMovie.setDuration(duration);
+                mm.updateMovie(editMovie);
+            } catch (Exception e) {
+                ShowAlerts.displayError("Kunne ikke opdatere filmen!");
+            }
 
+        }
+        // "Create" film
+        else{
+            Movie movie = new Movie(title, ratingOff, ratingPers, path, duration, chosenCategories);
+            try{
+                System.out.println(chosenCategories);
+                mm.createMovie(movie);
+                stage.close();
+            }
+            catch (Exception e) {
+                ShowAlerts.displayError("Kunne ikke tilføje filmen. " + e.getMessage());
+            }
+
+        }
     }
 
     @FXML

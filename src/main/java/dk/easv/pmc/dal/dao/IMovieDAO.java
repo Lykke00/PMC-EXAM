@@ -11,4 +11,5 @@ public interface IMovieDAO {
     Movie createMovie(Movie movie) throws Exception;
     boolean setMovieCategories(Movie m) throws Exception;
     List<Movie> getOldLowRatedMovies() throws Exception;
+    boolean updateMovie(Movie movie) throws Exception;
 }

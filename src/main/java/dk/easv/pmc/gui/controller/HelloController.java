@@ -108,6 +108,29 @@ public class HelloController implements Initializable {
             }
         });
 
+        tblColEdit.setCellFactory(new Callback<TableColumn<Movie, String>, TableCell<Movie, String>>() {
+            @Override
+            public TableCell<Movie, String> call(TableColumn<Movie, String> param) {
+                return new TableCell<Movie, String>() {
+                    @Override
+                    protected void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            Button editButton = new Button("Edit");
+                            editButton.setOnAction(event ->{
+                                Movie movie = getTableView().getItems().get(getIndex());
+                                editAddMovie(movie);
+                            });
+                            setGraphic(editButton);
+                        }
+                    }
+                };
+            }
+        });
+
 
         try {
             movieListView.setItems(movieModel.getAllMovies());
@@ -127,33 +150,30 @@ public class HelloController implements Initializable {
 
     @FXML
     private void onManageCategoryClick(ActionEvent actionEvent) {
-    try {
-        FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("/dk/easv/pmc/Manage-Category.fxml"));
-        Parent root = loader.load();
-        Stage stage = new Stage();
-        stage.setTitle("Manage Categories");
-        stage.setScene(new Scene(root));
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.showAndWait();
-    } catch (IOException e) {
-        /*
-        e.printStackTrace();
-
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setHeaderText(null);
-        alert.setContentText(e.getMessage());
-        alert.showAndWait();
-
-         */
-        ShowAlerts.displayError("Kunne ikke åbne vinduet");
-    }
+        try {
+            FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource("/dk/easv/pmc/Manage-Category.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Manage Categories");
+            stage.setScene(new Scene(root));
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+        }
+        catch (IOException e) {
+            ShowAlerts.displayError("Kunne ikke åbne vinduet");
+        }
     }
 
 
     @FXML
     private void onAddClick(ActionEvent actionEvent) {
+        editAddMovie(null);
+    }
+
+    private void editAddMovie(Movie movieToEdit){
+        String title = "Add movie";
         try {
+            // load vinduet
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(HelloApplication.class.getResource("/dk/easv/pmc/Add-EditMovie.fxml"));
 
@@ -161,13 +181,20 @@ public class HelloController implements Initializable {
             Parent scene = loader.load();
             stage.setScene(new Scene(scene));
 
+
+            // init ting
             CreateEditMovieController controller = loader.getController();
             controller.setStage(stage);
             controller.setModels(movieModel, catModel);
-            stage.setTitle("Things");//TODO edit or add
-            //stage.setTitle("Add/Edit Movie"); // TODO : få fat i selected items
+            // edit or add
+            if (movieToEdit != null) {
+                title = "Edit movie; " + movieToEdit.getName();
+                controller.setEditedMovie(movieToEdit);
+            }
+            stage.setTitle(title);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
+
         } catch (Exception e) {
             ShowAlerts.displayError("Kan ikke åbne vinduet!");
         }

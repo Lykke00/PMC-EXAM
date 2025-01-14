@@ -83,4 +83,8 @@ public class MovieModel {
     public List<Movie> getOldLowRatedMovies() throws Exception {
         return movieLogic.getOldLowRatedMovies();
     }
+
+    public boolean updateMovie(Movie movie) throws Exception {
+        return this.movieLogic.updateMovie(movie);
+    }
 }

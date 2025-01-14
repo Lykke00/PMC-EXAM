@@ -121,6 +121,10 @@ public class Movie {
         return duration;
     }
 
+    public void setDuration(double duration) {
+        this.duration = duration;
+    }
+
     public void setCategories(List<Category> categories) {
         this.categories = categories;
     }

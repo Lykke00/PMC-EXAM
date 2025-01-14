@@ -243,5 +243,37 @@ public class MovieDAO implements IMovieDAO {
         return categories;
     }
 
+    // TODO : implement lortet
+    public boolean updateMovie(Movie movie) throws Exception{
+        if (!doesMovieExist(movie.getCompleteFileLink())){
+            return false;
+        }
+        String SQL = """
+        UPDATE Movie 
+        SET Name = ?,
+        IMDBRating = ?,
+        PersonalRating = ?,
+        FileLink = ?,
+        Duration = ?
+        WHERE MovieId = ?;
+        """;
+        try(Connection conn = dbConnector.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(SQL)){
+            // set parameterne
+            stmt.setString(1, movie.getName());
+            stmt.setDouble(2, movie.getIMDBrating());
+            stmt.setDouble(3, movie.getPersonalRating());
+            stmt.setString(4, movie.getFileLink());
+            stmt.setDouble(5, movie.getDuration());
+            stmt.setInt(6, movie.getId());
+            stmt.executeUpdate();
+            setMovieCategories(movie);
+            return true;
+
+        } catch (Exception e) {
+            throw new Exception("Could not update movie: " + e.getMessage());
+        }
+    }
+
 
 }
