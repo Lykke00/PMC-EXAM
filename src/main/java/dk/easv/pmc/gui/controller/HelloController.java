@@ -173,6 +173,7 @@ public class HelloController implements Initializable {
         }
     }
 
+    // tydeligvis så er det både kategoprier og rating der bliver udfyldt her ;)
     public void populateCategories() {
         try {
             List<Category> categories = catModel.getAllCategories();
