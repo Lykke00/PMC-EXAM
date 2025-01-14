@@ -213,6 +213,11 @@ public class HelloController implements Initializable {
         txtSearchField.clear();
         officialRating.setText("None");
         ccbGenres.getCheckModel().clearChecks();
+        try {
+            movieListView.setItems(movieModel.getAllMovies());
+        } catch (Exception e) {
+            ShowAlerts.displayError("Kunne ikke hente filmene");
+        }
     }
     @FXML
     private void onRemove(ActionEvent event) {
