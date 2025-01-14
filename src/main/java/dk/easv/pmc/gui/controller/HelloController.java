@@ -195,9 +195,10 @@ public class HelloController implements Initializable {
             }
             stage.setTitle(title);
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.show();
-
+            stage.showAndWait();
+            movieListView.refresh();
         } catch (Exception e) {
+            e.printStackTrace();
             ShowAlerts.displayError("Kan ikke åbne vinduet!");
         }
     }

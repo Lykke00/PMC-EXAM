@@ -177,7 +177,7 @@ public class MovieDAO implements IMovieDAO {
             return true;
         }
         catch (Exception e) {
-            ShowAlerts.displayError(e.getMessage());
+            //ShowAlerts.displayError(e.getMessage());
             throw new Exception("Kunne ikke tilføje kategorierne");
         }
 
@@ -255,7 +255,7 @@ public class MovieDAO implements IMovieDAO {
         PersonalRating = ?,
         FileLink = ?,
         Duration = ?
-        WHERE MovieId = ?;
+        WHERE Id = ?;
         """;
         try(Connection conn = dbConnector.getConnection();
             PreparedStatement stmt = conn.prepareStatement(SQL)){
@@ -266,7 +266,8 @@ public class MovieDAO implements IMovieDAO {
             stmt.setString(4, movie.getFileLink());
             stmt.setDouble(5, movie.getDuration());
             stmt.setInt(6, movie.getId());
-            stmt.executeUpdate();
+            int rowsAffected = stmt.executeUpdate();
+            System.out.println(rowsAffected);
             setMovieCategories(movie);
             return true;
 

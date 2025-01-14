@@ -53,8 +53,7 @@ public class CreateEditMovieController{
         // fyld tingene ud
         txtTitle.setText(movie.getName());
 
-        chosenCategories = movie.getCategories();
-        for (Category cat : chosenCategories){
+        for (Category cat : movie.getCategories()){
             changeCategory(cat.getName());
         }
 
@@ -77,7 +76,6 @@ public class CreateEditMovieController{
                     ComboBox cb = (ComboBox) event.getSource();
                     changeCategory((String) cb.getValue());
                 } catch (Exception e) {
-                    System.out.println("nej");
                     ShowAlerts.displayError("Kunne ikke få kategorien");
                 }
             });
@@ -134,9 +132,15 @@ public class CreateEditMovieController{
                 editMovie.setPersonalRating(ratingPers);
                 editMovie.setFileLink(path);
                 editMovie.setDuration(duration);
-                mm.updateMovie(editMovie);
+                if (mm.updateMovie(editMovie)){
+                    stage.close();
+                }
+                else{
+                    ShowAlerts.displayError("Der skete en fejl!");
+                }
+
             } catch (Exception e) {
-                ShowAlerts.displayError("Kunne ikke opdatere filmen!");
+                ShowAlerts.displayError("Kunne ikke opdatere filmen!" + e.getMessage());
             }
 
         }
@@ -176,7 +180,6 @@ public class CreateEditMovieController{
             chosenCategories.remove(catMap.get(catName));
         }
         else{
-            System.out.println(catName);
             chosenCategories.add(catMap.get(catName));
         }
 
@@ -187,11 +190,5 @@ public class CreateEditMovieController{
         displayText.setLength(displayText.length() - 2);
 
         txtGenre.setText(displayText.toString());
-        System.out.println(catName);
-    }
-
-
-   public static void main(String[] args) throws Exception {
-
     }
 }
