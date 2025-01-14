@@ -6,9 +6,6 @@ import dk.easv.pmc.gui.utils.ShowAlerts;
 import dk.easv.pmc.gui.HelloApplication;
 import dk.easv.pmc.gui.model.CategoryModel;
 import dk.easv.pmc.gui.model.MovieModel;
-import dk.easv.pmc.gui.view.PlaybackView;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,6 +13,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -23,15 +24,19 @@ import javafx.util.Callback;
 import org.controlsfx.control.CheckComboBox;
 
 
+import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.math.BigDecimal;
 import java.util.List;
 
 public class HelloController implements Initializable {
     private final CategoryModel catModel = new CategoryModel(this);
-    private final PlaybackView playbackView;
+
     public MenuButton officialRating;
     @FXML private CheckComboBox<Category> ccbGenres;
     private final BigDecimal RATING_INC = new BigDecimal("0.5");
@@ -41,7 +46,7 @@ public class HelloController implements Initializable {
     @FXML
     private TableColumn<Movie, String> tblColGenre;
     @FXML
-    private TableColumn<Movie, Integer> tblColDuration;
+    private TableColumn<Movie, String> tblColDuration;
     @FXML
     private TableColumn<Movie, Double> tblColRating;
     @FXML
@@ -55,9 +60,10 @@ public class HelloController implements Initializable {
     @FXML
     private TextField txtSearchField;
 
+    private final Map<String, String> durationCache = new HashMap<>();
+
 
     public HelloController() throws Exception {
-        this.playbackView = new PlaybackView();
         try {
             this.movieModel = new MovieModel(this);
         } catch (Exception e) {
@@ -78,7 +84,7 @@ public class HelloController implements Initializable {
     private void populateMovies() {
         tblColTitel.setCellValueFactory(new PropertyValueFactory<>("name"));
         tblColGenre.setCellValueFactory(new PropertyValueFactory<>("GenresString"));
-        tblColDuration.setCellValueFactory(new PropertyValueFactory<>("durationString"));
+
         tblColRating.setCellValueFactory(new PropertyValueFactory<>("PersonalRating"));
         tblColOfficialRating.setCellValueFactory(new PropertyValueFactory<>("IMDBrating"));
 
@@ -96,11 +102,21 @@ public class HelloController implements Initializable {
                             Button playButton = new Button("Play");
                             playButton.setOnAction(event -> {
                                 Movie movie = getTableView().getItems().get(getIndex());
-                                try {
-                                    playbackView.play(movie.getCompleteFileLink());
-                                } catch (Exception e) {
+                                File movieFile = new File(movie.getCompleteFileLink());
 
-                                    ShowAlerts.displayError("Kunne ikke afspille film");
+                                if (!movieFile.exists()) {
+                                    System.out.println(movie.getCompleteFileLink());
+                                    ShowAlerts.displayError("File not found");
+                                    return;
+                                }
+
+                                if (Desktop.isDesktopSupported()) {
+                                    Desktop desktop = Desktop.getDesktop();
+                                    try {
+                                        desktop.open(movieFile);
+                                    } catch (IOException e) {
+                                        ShowAlerts.displayError(("kunne ikke åbne systemafspiller"));
+                                    }
                                 }
                             });
                             setGraphic(playButton);
@@ -133,6 +149,8 @@ public class HelloController implements Initializable {
             }
         });
 
+        Label noDataLabel = new Label("Ingen resultater fundet");
+        movieListView.setPlaceholder(noDataLabel);
 
         try {
             movieListView.setItems(movieModel.getAllMovies());
