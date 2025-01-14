@@ -33,7 +33,7 @@ public class MovieLogic {
     public ArrayList<Movie> getAllMovies() throws Exception {
         return this.movieDAO.getAllMovies();
     }
-    public ObservableList<Movie> getMoviesbyOfficialRating(ObservableList<Movie> movies) throws Exception {
+    public ObservableList<Movie> getMoviesbyOfficialRating(ObservableList<Movie> movies) {
         if (movies == null) {
             return null;
         }
@@ -44,10 +44,8 @@ public class MovieLogic {
                 filteredOfficialRating.add(m);
             }
         }
-
-
-
-      return filteredOfficialRating;
+        movies.setAll(filteredOfficialRating);
+      return movies;
     }
 
     public List<Movie> getOldLowRatedMovies() throws Exception {
