@@ -1,6 +1,7 @@
 package dk.easv.pmc.gui.model;
 
 import dk.easv.pmc.be.Movie;
+import dk.easv.pmc.bll.CategoryLogic;
 import dk.easv.pmc.bll.MovieLogic;
 import dk.easv.pmc.gui.controller.HelloController;
 import javafx.collections.FXCollections;
@@ -82,5 +83,9 @@ public class MovieModel {
     }
     public List<Movie> getOldLowRatedMovies() throws Exception {
         return movieLogic.getOldLowRatedMovies();
+    }
+
+    public ObservableList<Movie> getMoviesByOfficialRating(ObservableList<Movie> movies) {
+        return movieLogic.getMoviesbyOfficialRating(movies);
     }
 }

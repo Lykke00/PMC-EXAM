@@ -32,7 +32,7 @@ public class CategoryModel {
     public List<Category> getAllCategories() throws Exception {
         return categoryLogic.getAllCategories();
     }
-    public ObservableList<Movie> getMoviesbySelectedCategory(ObservableList<Movie> movies) throws Exception {
+    public ObservableList<Movie> getMoviesbySelectedCategory(ObservableList<Movie> movies) {
         return categoryLogic.getMoviesbySelectedCategory(movies);
     }
     public List<Category> getSelectedCategories() {

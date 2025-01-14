@@ -33,11 +33,13 @@ public class CategoryLogic {
     }
 
     //Kan muligvis også lave via Databasen
-    public ObservableList<Movie> getMoviesbySelectedCategory(ObservableList<Movie> movies) throws Exception {
+    public ObservableList<Movie> getMoviesbySelectedCategory(ObservableList<Movie> movies) {
         if (movies == null) {
             return null;
         }
         List<Category> categories = categoryModel.getSelectedCategories();
+        if(categories == null || categories.isEmpty())
+            return movies;
         ObservableList<Movie> filteredMovies = FXCollections.observableArrayList();
         for (Movie m : movies) {
             String name = m.getCategories().toString();
