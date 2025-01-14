@@ -2,7 +2,7 @@ package dk.easv.pmc.gui.controller;
 
 import dk.easv.pmc.be.Category;
 import dk.easv.pmc.be.Movie;
-import dk.easv.pmc.be.ShowAlerts;
+import dk.easv.pmc.gui.utils.ShowAlerts;
 import dk.easv.pmc.gui.HelloApplication;
 import dk.easv.pmc.gui.model.CategoryModel;
 import dk.easv.pmc.gui.model.MovieModel;
@@ -15,25 +15,17 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.MediaView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import org.controlsfx.control.CheckComboBox;
 
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.math.BigDecimal;
-import java.net.URL;
 import java.util.List;
-import java.util.ResourceBundle;
 
 public class HelloController implements Initializable {
     private final CategoryModel catModel = new CategoryModel(this);

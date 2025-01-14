@@ -1,8 +1,7 @@
 package dk.easv.pmc.gui.controller;
 
 import dk.easv.pmc.be.Category;
-import dk.easv.pmc.be.ShowAlerts;
-import dk.easv.pmc.bll.CategoryLogic;
+import dk.easv.pmc.gui.utils.ShowAlerts;
 import dk.easv.pmc.gui.model.CategoryModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

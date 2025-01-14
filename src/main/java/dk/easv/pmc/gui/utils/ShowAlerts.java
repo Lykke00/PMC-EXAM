@@ -1,4 +1,4 @@
-package dk.easv.pmc.be;
+package dk.easv.pmc.gui.utils;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;

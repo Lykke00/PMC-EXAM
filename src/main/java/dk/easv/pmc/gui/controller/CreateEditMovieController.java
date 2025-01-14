@@ -2,14 +2,11 @@ package dk.easv.pmc.gui.controller;
 
 import dk.easv.pmc.be.Category;
 import dk.easv.pmc.be.Movie;
-import dk.easv.pmc.be.ShowAlerts;
+import dk.easv.pmc.gui.utils.ShowAlerts;
 import dk.easv.pmc.bll.MetadataExtractor;
-import dk.easv.pmc.bll.MovieLogic;
 import dk.easv.pmc.gui.model.CategoryModel;
 import dk.easv.pmc.gui.model.MovieModel;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;

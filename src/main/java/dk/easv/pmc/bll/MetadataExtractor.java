@@ -1,6 +1,6 @@
 package dk.easv.pmc.bll;
 
-import dk.easv.pmc.be.ShowAlerts;
+import dk.easv.pmc.gui.utils.ShowAlerts;
 import org.apache.tika.Tika;
 import org.apache.tika.metadata.Metadata;
 
