@@ -3,8 +3,6 @@ package dk.easv.pmc.gui.model;
 import dk.easv.pmc.be.Category;
 import dk.easv.pmc.be.Movie;
 import dk.easv.pmc.bll.CategoryLogic;
-import dk.easv.pmc.dal.dao.CategoryDAO;
-import dk.easv.pmc.dal.dao.ICategoryDAO;
 import dk.easv.pmc.gui.controller.HelloController;
 import javafx.collections.ObservableList;
 

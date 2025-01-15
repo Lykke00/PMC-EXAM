@@ -1,7 +1,7 @@
 package dk.easv.pmc.dal.dao;
 
 import dk.easv.pmc.be.Category;
-import dk.easv.pmc.be.Movie;
+
 
 import java.util.List;
 

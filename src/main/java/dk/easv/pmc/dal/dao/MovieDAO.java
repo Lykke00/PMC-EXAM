@@ -2,7 +2,6 @@ package dk.easv.pmc.dal.dao;
 
 import dk.easv.pmc.be.Category;
 import dk.easv.pmc.be.Movie;
-import dk.easv.pmc.gui.utils.ShowAlerts;
 import dk.easv.pmc.dal.DBConnector;
 
 import java.nio.file.Files;
