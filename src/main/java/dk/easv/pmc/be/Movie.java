@@ -1,12 +1,7 @@
 package dk.easv.pmc.be;
 
 import dk.easv.pmc.bll.MetadataExtractor;
-import javafx.application.Platform;
-import org.apache.tika.Tika;
-import org.apache.tika.metadata.Metadata;
 
-import java.io.File;
-import java.io.IOException;
 import java.sql.Date;
 import java.util.List;
 

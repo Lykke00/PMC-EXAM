@@ -1,14 +1,11 @@
 package dk.easv.pmc.bll;
 
-import dk.easv.pmc.be.Category;
 import dk.easv.pmc.be.Movie;
 import dk.easv.pmc.dal.dao.IMovieDAO;
 import dk.easv.pmc.dal.dao.MovieDAO;
 import dk.easv.pmc.gui.model.MovieModel;
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import jdk.jshell.execution.FailOverExecutionControlProvider;
 
 import java.util.ArrayList;
 import java.util.List;
