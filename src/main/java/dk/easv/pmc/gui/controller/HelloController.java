@@ -84,7 +84,7 @@ public class HelloController implements Initializable {
     private void populateMovies() {
         tblColTitel.setCellValueFactory(new PropertyValueFactory<>("name"));
         tblColGenre.setCellValueFactory(new PropertyValueFactory<>("GenresString"));
-
+        tblColDuration.setCellValueFactory(new PropertyValueFactory<>("durationString"));
         tblColRating.setCellValueFactory(new PropertyValueFactory<>("PersonalRating"));
         tblColOfficialRating.setCellValueFactory(new PropertyValueFactory<>("IMDBrating"));
 
