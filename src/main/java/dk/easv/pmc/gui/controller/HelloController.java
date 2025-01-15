@@ -6,6 +6,7 @@ import dk.easv.pmc.gui.utils.ShowAlerts;
 import dk.easv.pmc.gui.HelloApplication;
 import dk.easv.pmc.gui.model.CategoryModel;
 import dk.easv.pmc.gui.model.MovieModel;
+import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -288,9 +289,15 @@ public class HelloController implements Initializable {
                 movieListView.setItems(movieModel.getMoviesByOfficialRating(movieListView.getItems()));
             });
             ccbGenres.addEventHandler(ComboBox.ON_HIDDEN, event -> {
+                // når man unselecter oppefra så hvis man når til det sidste element,
+                // så på en eller anden vis gider den ikke at vise de sidste item som titel,
+                // og dette er et forsøg på at fikse det,
+                // - men nu står der bare ikke null i boksen længere men bare "" i stedet idk why
+                ccbGenres.setTitle(setTextForCheckComboBox());
                 //Først så finder vi de film der er søgt på i søgefeltet. Derefter filtrerer vi på de valgt rating, hvor vi tilsidst filtrerer på de valgte kategorier.
                 movieListView.setItems(catModel.getMoviesbySelectedCategory(movieModel.getMoviesByOfficialRating(movieModel.searchMovie(txtSearchField.getText()))));
             });
+            ccbGenres.getCheckModel().getCheckedIndices().addListener((ListChangeListener<? super Integer>) event -> ccbGenres.setTitle(setTextForCheckComboBox()));
         }
     @FXML
     public void checkOldLowRatedMovies() {
@@ -312,4 +319,16 @@ public class HelloController implements Initializable {
         }
     }
 
+    private String setTextForCheckComboBox(){
+        try{
+            StringBuilder returnString = new StringBuilder();
+            for (Category category : ccbGenres.getCheckModel().getCheckedItems()) {
+                returnString.append(category.getName()).append(", ");
+            }
+            return returnString.substring(0, returnString.length() - 2);
+        }
+        catch (Exception e) {
+            return "";
+        }
+    }
 }
