@@ -18,7 +18,7 @@ public class HelloApplication extends Application {
         stage.show();
 
         // Tjek for gamle film med lav rating
-       HelloController controller = fxmlLoader.getController();
+        HelloController controller = fxmlLoader.getController();
         controller.checkOldLowRatedMovies(); // Tilføjet kald til advarselsmetoden
     }
 

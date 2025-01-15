@@ -197,16 +197,19 @@ public class MovieDAO implements IMovieDAO {
              ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
-                oldLowRatedMovies.add(new Movie(
-                        rs.getInt("Id"),               // 1. id
-                        rs.getString("Name"),          // 2. name
-                        rs.getDouble("IMDBRating"),    // 3. IMDBrating
-                        rs.getDouble("PersonalRating"),// 4. personalRating
-                        rs.getString("FileLink"),
-                        rs.getDate("LastView"),   // 5. fileLink
-                        rs.getInt("Duration"),         // 6. duration
-                        fetchCategoriesForMovie(rs.getInt("Id")) // 7. categories (hent kategorier for filmen)
-                ));
+                String path = rs.getString("FileLink");
+                if (doesMovieExist(path)){
+                    oldLowRatedMovies.add(new Movie(
+                            rs.getInt("Id"),               // 1. id
+                            rs.getString("Name"),          // 2. name
+                            rs.getDouble("IMDBRating"),    // 3. IMDBrating
+                            rs.getDouble("PersonalRating"),// 4. personalRating
+                            path,                                     // 5. fileLink
+                            rs.getDate("LastView"),        // 5.5. Last view
+                            rs.getInt("Duration"),         // 6. duration
+                            fetchCategoriesForMovie(rs.getInt("Id")) // 7. categories (hent kategorier for filmen)
+                    ));
+                }
             }
         } catch (SQLException e) {
             throw new Exception("Could not fetch old low-rated movies: " + e.getMessage());
@@ -243,7 +246,6 @@ public class MovieDAO implements IMovieDAO {
         return categories;
     }
 
-    // TODO : implement lortet
     public boolean updateMovie(Movie movie) throws Exception{
         if (!doesMovieExist(movie.getCompleteFileLink())){
             return false;
