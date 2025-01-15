@@ -43,6 +43,7 @@ public class CategoryLogic {
         ObservableList<Movie> filteredMovies = FXCollections.observableArrayList();
         for (Movie m : movies) {
             String name = m.getCategories().toString();
+            name = name.substring(0, name.length()-1) + ",";
             for (Category c : categories) {
                 if (name.contains(c.getName() + ",")) {
                     filteredMovies.add(m);
